@@ -5,14 +5,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: Docker@2
-  inputs:
-    command: 'build'
-    Dockerfile: '**/Dockerfile'
-    tags: |
-      $(Build.BuildId)
-      bengreenier/browserd:$(Build.BuildId)
-      bengreenier/browserd:latest
+- script: docker build . -t bengreenier/browserd:$(Build.BuildId) -t bengreenier/browserd:latest
 - task: Docker@2
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   inputs:
