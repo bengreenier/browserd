@@ -1,0 +1,56 @@
+{
+  "name": "browserd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/browserd.js",
+  "scripts": {
+    "lint": "tslint -p .",
+    "build": "tsc -p .",
+    "direct-start": "electron .",
+    "start": "npm run build && npm run direct-start",
+    "test": "jest --coverage",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder"
+  },
+  "author": "",
+  "license": "ISC",
+  "build": {
+    "files": [
+      "!**/src/**/*"
+    ],
+    "appId": "browserd",
+    "directories": {
+      "output": "dist-bin"
+    }
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "setupFiles": [
+      "./src/__tests__/setup.ts"
+    ],
+    "testRegex": "/__tests__/.*spec\\.[jt]sx?$"
+  },
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "pino": "^5.12.6",
+    "sdp-transform": "^2.8.0",
+    "simple-peer": "^9.3.0",
+    "strict-event-emitter-types": "^2.0.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "electron": "^5.0.2",
+    "@types/dotenv": "^6.1.1",
+    "@types/jest": "^24.0.13",
+    "@types/pino": "^5.8.8",
+    "@types/sdp-transform": "^2.4.0",
+    "@types/simple-peer": "^6.1.5",
+    "@types/uuid": "^3.4.4",
+    "electron-builder": "^20.43.0",
+    "jest": "^24.8.0",
+    "jest-fetch-mock": "^2.1.2",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.17.0",
+    "typescript": "^3.5.1"
+  }
+}
