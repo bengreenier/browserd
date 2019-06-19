@@ -17,7 +17,7 @@ steps:
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   inputs:
     containerRegistry: 'bengreenier - dockerhub'
-    repository: 'bengreenier/docker-xvfb'
+    repository: 'bengreenier/browserd'
     command: 'push'
     tags: |
       $(Build.BuildId)
