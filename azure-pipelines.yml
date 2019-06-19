@@ -5,6 +5,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- script: docker build . -t bengreenier/$(Build.BuildId) -t bengreenier/latest
 - task: Docker@2
   inputs:
     command: 'build'
@@ -13,6 +14,7 @@ steps:
     tags: |
       $(Build.BuildId)
       latest
+- script: docker images
 - task: Docker@2
   # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   inputs:
