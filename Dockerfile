@@ -11,7 +11,7 @@ RUN npm run test
 FROM node:lts-jessie-slim as runner
 # Get all the x/os deps we need
 RUN apt-get update \
-  && apt-get install -y curl \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y curl \
   dos2unix \
   xinit \
   libnss3 \
