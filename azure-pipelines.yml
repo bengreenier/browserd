@@ -9,10 +9,10 @@ steps:
   inputs:
     command: 'build'
     Dockerfile: '**/Dockerfile'
+    repository: 'bengreenier/browserd'
     tags: |
       $(Build.BuildId)
-      bengreenier/browserd:$(Build.BuildId)
-      bengreenier/browserd:latest
+      latest
 - task: Docker@2
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   inputs:
