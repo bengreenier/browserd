@@ -35,7 +35,7 @@
                     {
                         "name": "[parameters('siteName')]",
                         "properties": {
-                            "image": "bengreenier/browserd:[parameters('imageTag')]",
+                            "image": "[concat('bengreenier/browserd:', parameters('imageTag'))]",
                             "resources": {
                                 "requests": {
                                     "cpu": "[int(parameters('numberCpuCores'))]",
