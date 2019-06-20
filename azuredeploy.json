@@ -27,7 +27,7 @@
     "resources": [
         {
             "location": "[parameters('siteLocation')]",
-            "name": "[parameters('containerName')]",
+            "name": "[parameters('siteName')]",
             "type": "Microsoft.ContainerInstance/containerGroups",
             "apiVersion": "2018-10-01",
             "properties": {
