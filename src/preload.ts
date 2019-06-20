@@ -49,7 +49,6 @@ export function startWebrtcProvider(so: ISharedObject, logger: Logger) {
     const {
         captureWindowTitle,
         iceServers,
-        peerService,
         pollInterval,
         pollUrl } = so;
     const captureWindow = remote.BrowserWindow.getAllWindows().find((w) => w.getTitle() === captureWindowTitle);
@@ -85,7 +84,7 @@ export function startWebrtcProvider(so: ISharedObject, logger: Logger) {
                 pollIntervalMs: pollInterval,
                 url: pollUrl,
             });
-            await sig.signIn(captureWindowTitle + uuid(), peerService, true);
+            await sig.signIn(captureWindowTitle + uuid(), true);
             sig.on("error", (err) => {
                 logger.error(`sig fail: ${err}`);
             });

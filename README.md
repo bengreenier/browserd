@@ -7,13 +7,16 @@ Headless electron app platform for the cloud 🤕☁✨
 We needed a way to run chrome-based browser experiences inside a container, and to stream that container to [remote clients](https://github.com/bengreenier/browserd/issues/2) using webrtc.
 Browserd (named to indicate it's a browser [daemon](https://en.wikipedia.org/wiki/Daemon_(computing))) uses electron to do so.
 
+## Signaling server
+
+Our service is compatible with any standard WebRTC signaling implementation. If you need a simple one that communicates over HTTP/1.1, [webrtc-signal-http](https://github.com/bengreenier/webrtc-signal-http) is a good option.
+
 ## Configuration
 
 Our service can be configured using a [dotenv](https://www.npmjs.com/package/dotenv) file - `.env` containing one environment variable
 key and value per line. For example `KEY=value`. Below are the possible options:
 
 + `SERVICE_URL` (string) - the web service address (to render)
-+ `PEER_SERVICE` (string) - the window and stream source name
 + `TURN_URL` (string) - a turn address
 + `TURN_USERNAME` (string) - a turn username
 + `TURN_PASSWORD` (string) - a turn password credential
