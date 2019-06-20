@@ -104,43 +104,43 @@
               },
               "environmentVariables": [
                 {
-                  "key": "SERVICE_URL",
+                  "name": "SERVICE_URL",
                   "value": "[parameters('envServiceUrl')]"
                 },
                 {
-                  "key": "PEER_SERVICE",
+                  "name": "PEER_SERVICE",
                   "value": "[parameters('envPeerService')]"
                 },
                 {
-                  "key": "TURN_URL",
+                  "name": "TURN_URL",
                   "value": "[parameters('envTurnUrl')]"
                 },
                 {
-                  "key": "TURN_USERNAME",
+                  "name": "TURN_USERNAME",
                   "value": "[parameters('envTurnUsername')]"
                 },
                 {
-                  "key": "TURN_PASSWORD",
+                  "name": "TURN_PASSWORD",
                   "value": "[parameters('envTurnPassword')]"
                 },
                 {
-                  "key": "POLL_URL",
+                  "name": "POLL_URL",
                   "value": "[parameters('envPollUrl')]"
                 },
                 {
-                  "key": "POLL_INTERVAL",
+                  "name": "POLL_INTERVAL",
                   "value": "[parameters('envPollInterval')]"
                 },
                 {
-                  "key": "HEIGHT",
+                  "name": "HEIGHT",
                   "value": "[parameters('envHeight')]"
                 },
                 {
-                  "key": "WIDTH",
+                  "name": "WIDTH",
                   "value": "[parameters('envWidth')]"
                 },
                 {
-                  "key": "EXP_HIDE_STREAMER",
+                  "name": "EXP_HIDE_STREAMER",
                   "value": "[parameters('envExpHideStreamer')]"
                 }
               ]
