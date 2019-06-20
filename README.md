@@ -28,7 +28,7 @@ key and value per line. For example `KEY=value`. Below are the possible options:
 How to get browserd up and running. ⚙
 
 ### Docker
-> Note: Your `.env` file should be in the project directory (next to `package.json) - for more details see the
+> Note: Your `.env` file should be in the project directory (next to `package.json`) - for more details see the
 [Configuration](#configuration) section above.
 
 You'll need [docker](https://docs.docker.com/install/) to build and run. Once you have it, you can build and run:
