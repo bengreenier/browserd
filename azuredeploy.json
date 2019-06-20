@@ -23,6 +23,66 @@
             "type": "string",
             "defaultValue": "1.5"
         },
+        "envServiceUrl": {
+            "type": "string",
+            "metadata": {
+                "description": "the web service address (to render)"
+            }
+        },
+        "envPeerService": {
+            "type": "string",
+            "metadata": {
+                "description": "the window and stream source name"
+            }
+        },
+        "envTurnUrl": {
+            "type": "string",
+            "metadata": {
+                "description": "a turn address"
+            }
+        },
+        "envTurnUsername": {
+            "type": "string",
+            "metadata": {
+                "description": "a turn username"
+            }
+        },
+        "envTurnPassword: {
+            "type": "string",
+            "metadata": {
+                "description": "a turn password"
+            }
+        },
+        "envPollUrl": {
+            "type": "string",
+            "metadata": {
+                "description": "a signaling server base address"
+            }
+        },
+        "envPollInterval": {
+            "type": "string",
+            "metadata": {
+                "description": "a signaling poll interval in ms"
+            }
+        },
+        "envHeight": {
+            "type": "string",
+            "metadata": {
+                "description": "the window height"
+            }
+        },
+        "envWidth": {
+            "type": "string",
+            "metadata": {
+                "description": "the window width"
+            }
+        },
+        "envExpHideStreamer": {
+            "type": "string",
+            "metadata": {
+                "description": "experiment flag for hiding the streamer window"
+            }
+        }
     },
     "resources": [
         {
@@ -42,7 +102,49 @@
                                     "memoryInGB": "[float(parameters('memory'))]"
                                 }
                             }
-                        }
+                        },
+                        "environmentVariables": [
+                            {
+                                "key": "SERVICE_URL",
+                                "value" : "[parameters('envServiceUrl')]"
+                            },
+                            {
+                                "key": "PEER_SERVICE",
+                                "value": "[parameters('envPeerService')]"
+                            },
+                            {
+                                "key": "TURN_URL",
+                                "value": "[parameters('envTurnUrl')]"
+                            },
+                            {
+                                "key": "TURN_USERNAME",
+                                "value": "[parameters('envTurnUsername')]"
+                            },
+                            {
+                                "key": "TURN_PASSWORD",
+                                "value": "[parameters('envTurnPassword')]"
+                            },
+                            {
+                                "key": "POLL_URL",
+                                "value": "[parameters('envPollUrl')]"
+                            },
+                            {
+                                "key": "POLL_INTERVAL",
+                                "value": "[parameters('envPollInterval')]"
+                            },
+                            {
+                                "key": "HEIGHT",
+                                "value": "[parameters('envHeight')]"
+                            },
+                            {
+                                "key": "WIDTH",
+                                "value": "[parameters('envWidth')]"
+                            },
+                            {
+                                "key": "EXP_HIDE_STREAMER",
+                                "value": "[parameters('envExpHideStreamer')]"
+                            }
+                      ],
                     }
                 ],
                 "restartPolicy": "Always",
