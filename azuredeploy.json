@@ -11,7 +11,9 @@
         "imageTag": {
             "type": "string",
             "defaultValue": "latest",
-            "description": "The Docker image tag - from https://hub.docker.com/r/bengreenier/browserd/tags"
+            "metadata": {
+                "description": "The Docker image tag - from https://hub.docker.com/r/bengreenier/browserd/tags"
+            }
         },
         "numberCpuCores": {
             "type": "string",
