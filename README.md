@@ -4,6 +4,8 @@ Headless electron app platform for the cloud 🤕☁✨
 
 [![Build Status](https://b3ngr33ni3r.visualstudio.com/browserd/_apis/build/status/bengreenier.browserd?branchName=master)](https://b3ngr33ni3r.visualstudio.com/browserd/_build/latest?definitionId=9&branchName=master)
 
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
+
 We needed a way to run chrome-based browser experiences inside a container, and to stream that container to [remote clients](https://github.com/bengreenier/browserd/issues/2) using webrtc.
 Browserd (named to indicate it's a browser [daemon](https://en.wikipedia.org/wiki/Daemon_(computing))) uses electron to do so.
 
