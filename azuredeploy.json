@@ -47,7 +47,7 @@
                 "description": "a turn username"
             }
         },
-        "envTurnPassword: {
+        "envTurnPassword": {
             "type": "string",
             "metadata": {
                 "description": "a turn password"
