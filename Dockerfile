@@ -1,5 +1,5 @@
 # build, lint, and test
-FROM node:lts-jessie-slim as builder
+FROM node:12.4.0 as builder
 WORKDIR /usr/app/builder
 COPY package*.json ts*.json ./
 COPY ./src ./src
@@ -8,7 +8,7 @@ RUN npm run lint
 RUN npm run build
 RUN npm run test
 
-FROM node:lts-jessie-slim as runner
+FROM node:12.4.0 as runner
 # Get all the x/os deps we need
 RUN apt-get update \
   && DEBIAN_FRONTEND=noninteractive apt-get install -y curl \
