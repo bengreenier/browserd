@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "siteLocation": {
+            "type": "string"
+        },
+        "siteName": {
+            "type": "string"
+        },
+        "imageTag": {
+            "type": "string",
+            "defaultValue": "latest",
+            "description": "The Docker image tag - from https://hub.docker.com/r/bengreenier/browserd/tags"
+        },
+        "numberCpuCores": {
+            "type": "string",
+            "defaultValue": "1"
+        },
+        "memory": {
+            "type": "string",
+            "defaultValue": "1.5"
+        },
+    },
+    "resources": [
+        {
+            "location": "[parameters('siteLocation')]",
+            "name": "[parameters('containerName')]",
+            "type": "Microsoft.ContainerInstance/containerGroups",
+            "apiVersion": "2018-10-01",
+            "properties": {
+                "containers": [
+                    {
+                        "name": "[parameters('siteName')]",
+                        "properties": {
+                            "image": "bengreenier/browserd:[parameters('imageTag')]",
+                            "resources": {
+                                "requests": {
+                                    "cpu": "[int(parameters('numberCpuCores'))]",
+                                    "memoryInGB": "[float(parameters('memory'))]"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "restartPolicy": "Always",
+                "osType": "linux"
+            },
+            "tags": {}
+        }
+    ]
+}
