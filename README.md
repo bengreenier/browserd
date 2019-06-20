@@ -43,10 +43,10 @@ docker run -it --env-file .env browserd:local
 
 ### Locally
 
-> Note: Your `.env` file should be in the project directory (next to `package.json) - for more details see the
+> Note: Your `.env` file should be in the project directory (next to `package.json`) - for more details see the
 [Configuration](#configuration) section above.
 
-You'll need [`Node LTS (v10.x.x)`](https://nodejs.org/en/) and `npm` (bundled with the node installer) to build and run. Once you have
+You'll need [`Node LTS (v10.x.x)`](https://nodejs.org/en/) and `npm` (bundled with the node installer`) to build and run. Once you have
 those, you can install dependencies and run:
 
 ```
