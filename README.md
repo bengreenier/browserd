@@ -17,7 +17,6 @@ Our service can be configured using a [dotenv](https://www.npmjs.com/package/dot
 key and value per line. For example `KEY=value`. Below are the possible options:
 
 + `SERVICE_URL` (string) - the web service address (to render)
-+ `PEER_SERVICE` (string) - the window and stream source name
 + `TURN_URL` (string) - a turn address
 + `TURN_USERNAME` (string) - a turn username
 + `TURN_PASSWORD` (string) - a turn password credential

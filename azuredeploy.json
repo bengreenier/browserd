@@ -29,12 +29,6 @@
         "description": "the web service address (to render)"
       }
     },
-    "envPeerService": {
-      "type": "string",
-      "metadata": {
-        "description": "the window and stream source name"
-      }
-    },
     "envTurnUrl": {
       "type": "string",
       "metadata": {
@@ -106,10 +100,6 @@
                 {
                   "name": "SERVICE_URL",
                   "value": "[parameters('envServiceUrl')]"
-                },
-                {
-                  "name": "PEER_SERVICE",
-                  "value": "[parameters('envPeerService')]"
                 },
                 {
                   "name": "TURN_URL",
