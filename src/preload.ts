@@ -84,7 +84,7 @@ export function startWebrtcProvider(so: ISharedObject, logger: Logger) {
                 pollIntervalMs: pollInterval,
                 url: pollUrl,
             });
-            await sig.signIn(captureWindowTitle + uuid(), true);
+            await sig.signIn(captureWindowTitle + uuid());
             sig.on("error", (err) => {
                 logger.error(`sig fail: ${err}`);
             });

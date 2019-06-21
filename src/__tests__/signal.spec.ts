@@ -47,10 +47,9 @@ describe("Signal", () => {
   describe("signIn", () => {
     it("should sign in (no other peers)", async () => {
       const expectedPeerName = "peerName";
-      const expectedIsProvider = true;
       const expectedPeerId = "123";
       const expectedUrl = `${defaultCtorArgs.url}/sign_in?` +
-      `peer_name=${expectedPeerName}&is_stream_provider=${expectedIsProvider}`;
+      `peer_name=${expectedPeerName}`;
       const expectedEmptyData = "";
 
       fetchMock.mockResponseOnce(expectedEmptyData, {
@@ -59,7 +58,7 @@ describe("Signal", () => {
         },
       });
 
-      await testInstance.signIn(expectedPeerName, expectedIsProvider);
+      await testInstance.signIn(expectedPeerName);
       expect(testInstance.id).toBe(expectedPeerId);
       expect(fetchMock).toHaveBeenCalledTimes(1);
       expect(fetchMock).toHaveBeenCalledWith(expectedUrl);
@@ -68,7 +67,6 @@ describe("Signal", () => {
 
     it("should sign in (other peers)", async () => {
       const expectedPeerName = "peerName";
-      const expectedIsProvider = true;
       const expectedPeerId = "123";
       const expectedPeerData = "remotePeer,321,1";
 
@@ -78,7 +76,7 @@ describe("Signal", () => {
         },
       });
 
-      await testInstance.signIn(expectedPeerName, expectedIsProvider);
+      await testInstance.signIn(expectedPeerName);
       expect(parsePeers).toHaveBeenCalledTimes(1);
       expect(parsePeers).toHaveBeenCalledWith(expectedPeerData);
     });
@@ -86,7 +84,7 @@ describe("Signal", () => {
     it("should gracefully fail to sign in", async () => {
       fetchMock.mockRejectOnce(new Error("Mock Failure"));
 
-      await expect(testInstance.signIn("peerName", true)).rejects.toBeInstanceOf(Error);
+      await expect(testInstance.signIn("peerName")).rejects.toBeInstanceOf(Error);
     });
 
     it("should fail if no peer id is returned", async () => {
@@ -94,7 +92,7 @@ describe("Signal", () => {
         headers: {},
       });
 
-      await expect(testInstance.signIn("peerName", true)).rejects.toBeInstanceOf(Error);
+      await expect(testInstance.signIn("peerName")).rejects.toBeInstanceOf(Error);
     });
   });
 
@@ -182,7 +180,7 @@ describe("Signal", () => {
       });
       testInstance.on("peer-message", onPeerMessage);
 
-      await testInstance.signIn("name", true);
+      await testInstance.signIn("name");
       expect(global.setInterval).toHaveBeenCalledTimes(1);
       jest.advanceTimersByTime(1000);
 
@@ -216,7 +214,7 @@ describe("Signal", () => {
       });
       testInstance.on("peer-update", onPeerUpdate);
 
-      await testInstance.signIn("name", true);
+      await testInstance.signIn("name");
       expect(global.setInterval).toHaveBeenCalledTimes(1);
       jest.advanceTimersByTime(1000);
 
@@ -244,7 +242,7 @@ describe("Signal", () => {
       });
       testInstance.on("error", onError);
 
-      await testInstance.signIn("name", true);
+      await testInstance.signIn("name");
       expect(global.setInterval).toHaveBeenCalledTimes(1);
       jest.advanceTimersByTime(1000);
 
