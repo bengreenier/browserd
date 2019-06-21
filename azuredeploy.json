@@ -1,0 +1,146 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "siteLocation": {
+      "type": "string"
+    },
+    "siteName": {
+      "type": "string"
+    },
+    "imageTag": {
+      "type": "string",
+      "defaultValue": "latest",
+      "metadata": {
+        "description": "The Docker image tag - from https://hub.docker.com/r/bengreenier/browserd/tags"
+      }
+    },
+    "numberCpuCores": {
+      "type": "string",
+      "defaultValue": "1"
+    },
+    "memory": {
+      "type": "string",
+      "defaultValue": "1.5"
+    },
+    "envServiceUrl": {
+      "type": "string",
+      "metadata": {
+        "description": "the web service address (to render)"
+      }
+    },
+    "envTurnUrl": {
+      "type": "string",
+      "metadata": {
+        "description": "a turn address"
+      }
+    },
+    "envTurnUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "a turn username"
+      }
+    },
+    "envTurnPassword": {
+      "type": "string",
+      "metadata": {
+        "description": "a turn password"
+      }
+    },
+    "envPollUrl": {
+      "type": "string",
+      "metadata": {
+        "description": "a signaling server base address"
+      }
+    },
+    "envPollInterval": {
+      "type": "string",
+      "metadata": {
+        "description": "a signaling poll interval in ms"
+      }
+    },
+    "envHeight": {
+      "type": "string",
+      "metadata": {
+        "description": "the window height"
+      }
+    },
+    "envWidth": {
+      "type": "string",
+      "metadata": {
+        "description": "the window width"
+      }
+    },
+    "envExpHideStreamer": {
+      "type": "string",
+      "metadata": {
+        "description": "experiment flag for hiding the streamer window"
+      }
+    }
+  },
+  "resources": [
+    {
+      "location": "[parameters('siteLocation')]",
+      "name": "[parameters('siteName')]",
+      "type": "Microsoft.ContainerInstance/containerGroups",
+      "apiVersion": "2018-10-01",
+      "properties": {
+        "containers": [
+          {
+            "name": "[parameters('siteName')]",
+            "properties": {
+              "image": "[concat('bengreenier/browserd:', parameters('imageTag'))]",
+              "resources": {
+                "requests": {
+                  "cpu": "[int(parameters('numberCpuCores'))]",
+                  "memoryInGB": "[float(parameters('memory'))]"
+                }
+              },
+              "environmentVariables": [
+                {
+                  "name": "SERVICE_URL",
+                  "value": "[parameters('envServiceUrl')]"
+                },
+                {
+                  "name": "TURN_URL",
+                  "value": "[parameters('envTurnUrl')]"
+                },
+                {
+                  "name": "TURN_USERNAME",
+                  "value": "[parameters('envTurnUsername')]"
+                },
+                {
+                  "name": "TURN_PASSWORD",
+                  "value": "[parameters('envTurnPassword')]"
+                },
+                {
+                  "name": "POLL_URL",
+                  "value": "[parameters('envPollUrl')]"
+                },
+                {
+                  "name": "POLL_INTERVAL",
+                  "value": "[parameters('envPollInterval')]"
+                },
+                {
+                  "name": "HEIGHT",
+                  "value": "[parameters('envHeight')]"
+                },
+                {
+                  "name": "WIDTH",
+                  "value": "[parameters('envWidth')]"
+                },
+                {
+                  "name": "EXP_HIDE_STREAMER",
+                  "value": "[parameters('envExpHideStreamer')]"
+                }
+              ]
+            }
+          }
+        ],
+        "restartPolicy": "Always",
+        "osType": "linux"
+      },
+      "tags": {}
+    }
+  ]
+}
