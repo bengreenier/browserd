@@ -80,12 +80,10 @@ export class Signal extends (EventEmitter as new() => SignalEmitter) {
     /**
      * Sign in to the signaler
      * @param peerName the peer name to register as
-     * @param peerService the peer service to register for
-     * @param isProvider indicates if this peer is a service provider or consumer
      */
-    public signIn(peerName: string, peerService: string, isProvider = true) {
+    public signIn(peerName: string) {
         return fetch(url.resolve(this.url,
-            `/sign_in?peer_name=${peerName}&peer_service=${peerService}&is_stream_provider=${isProvider}`))
+            `/sign_in?peer_name=${peerName}`))
             .then((res) => {
                 if (!res.ok) {
                     throw new Error(`Invalid Response: ${res.status}`);

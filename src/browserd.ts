@@ -10,7 +10,6 @@ logger.info(`working directory: ${process.cwd()}`);
  * Configure our environment variables from dotenv
  * Supported:
  *  + SERVICE_URL (string) - the web service address (to render)
- *  + PEER_SERVICE (string) - the window and stream source name
  *  + TURN_URL (string) - a turn address
  *  + TURN_USERNAME (string) - a turn username
  *  + TURN_PASSWORD (string) - a turn password credential
@@ -28,7 +27,6 @@ if (envParserStatus.error) {
 }
 [
     "SERVICE_URL",
-    "PEER_SERVICE",
     "TURN_URL",
     "TURN_USERNAME",
     "TURN_PASSWORD",
@@ -49,8 +47,8 @@ let streamerWindow: BrowserWindow;
 
 // when eletron is ready to go, we begin
 app.on("ready", async () => {
-    // we'll name our window after the peer service (this is critical, as it's how we'll get the video stream)
-    const captureWindowTitle = process.env.PEER_SERVICE as string;
+    // we'll name our window after the service url (this is critical, as it's how we'll get the video stream)
+    const captureWindowTitle = process.env.SERVICE_URL as string;
 
     // we need to share some state with the capturer (in a different process) - so we set that up here
     (global as NodeJS.Global & {sharedObject: ISharedObject})[sharedObjectKeyName] = {
@@ -64,7 +62,6 @@ app.on("ready", async () => {
                 username: process.env.TURN_USERNAME,
             },
         ],
-        peerService: captureWindowTitle,
         pollInterval: Number.parseInt(process.env.POLL_INTERVAL as string, 10).valueOf(),
         pollUrl: process.env.POLL_URL as string,
     };

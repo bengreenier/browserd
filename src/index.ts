@@ -324,7 +324,6 @@ export interface ISharedObject {
     allowPreload: boolean;
     captureWindowTitle: string;
     iceServers: RTCIceServer[];
-    peerService: string;
     pollInterval: number;
     pollUrl: string;
 }
