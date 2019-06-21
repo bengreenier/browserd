@@ -28,7 +28,8 @@
     "setupFiles": [
       "./src/__tests__/setup.ts"
     ],
-    "testRegex": "/__tests__/.*spec\\.[jt]sx?$"
+    "testRegex": "/__tests__/.*spec\\.[jt]sx?$",
+    "testResultsProcessor": "jest-sonar-reporter"
   },
   "dependencies": {
     "dotenv": "^8.0.0",
@@ -39,16 +40,17 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "electron": "^5.0.2",
     "@types/dotenv": "^6.1.1",
     "@types/jest": "^24.0.13",
     "@types/pino": "^5.8.8",
     "@types/sdp-transform": "^2.4.0",
     "@types/simple-peer": "^6.1.5",
     "@types/uuid": "^3.4.4",
+    "electron": "^5.0.2",
     "electron-builder": "^20.43.0",
     "jest": "^24.8.0",
     "jest-fetch-mock": "^2.1.2",
+    "jest-sonar-reporter": "^2.0.0",
     "ts-jest": "^24.0.2",
     "tslint": "^5.17.0",
     "typescript": "^3.5.1"
