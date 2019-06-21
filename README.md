@@ -1,5 +1,7 @@
 # browserd
 
+TESTING SONAR BUILDS
+
 Headless electron app platform for the cloud 🤕☁✨
 
 [![Build Status](https://b3ngr33ni3r.visualstudio.com/browserd/_apis/build/status/bengreenier.browserd?branchName=master)](https://b3ngr33ni3r.visualstudio.com/browserd/_build/latest?definitionId=9&branchName=master)
