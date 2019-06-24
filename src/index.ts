@@ -3,8 +3,7 @@ import {
   BrowserWindowConstructorOptions,
   DesktopCapturerSource,
   SourcesOptions,
-  WebContents
-} from "electron";
+  WebContents } from "electron";
 import { parse as parseSdp, write as writeSdp } from "sdp-transform";
 import { default as SimplePeer } from "simple-peer";
 
