@@ -2,7 +2,7 @@
 dist/
 
 # electron-builder output dir
-dist-bin/
+bin/
 
 # dotenv file
 .env
