@@ -1,6 +1,7 @@
 import { config as configEnv } from "dotenv";
 import { app, BrowserWindow } from "electron";
-import {default as pino} from "pino";
+import { default as pino } from "pino";
+import { default as twilio } from "twilio";
 import { createWindow, ISharedObject, sharedObjectKeyName } from ".";
 
 const logger = pino();
@@ -18,6 +19,8 @@ logger.info(`working directory: ${process.cwd()}`);
  *  + HEIGHT (number) - the window height
  *  + WIDTH (number) - the window width
  *  + EXP_HIDE_STREAMER (boolean) - experiment flag for hiding the streamer window
+ *  + TWILIO_ACCOUNT_SID (string) - a Twilio AccountSid required to get a Network Traversal Service Token
+ *  + TWILIO_AUTH_TOKEN (string) - a Twilio AuthToken required to get a Network Traversal Service Token
  */
 const envParserStatus = configEnv();
 if (envParserStatus.error) {
@@ -35,6 +38,8 @@ if (envParserStatus.error) {
     "WIDTH",
     "HEIGHT",
     "EXP_HIDE_STREAMER",
+    "TWILIO_ACCOUNT_SID",
+    "TWILIO_AUTH_TOKEN",
 ].filter((expectedEnvKey) => {
     return process.env[expectedEnvKey] === undefined;
 }).forEach((key) => {
@@ -47,21 +52,49 @@ let streamerWindow: BrowserWindow;
 
 // when eletron is ready to go, we begin
 app.on("ready", async () => {
+    // TURN servers array
+    let iceServers: RTCIceServer[] = [];
+
+    try {
+        // We prioritize Twilio over coturn for turn servers
+        if (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) {
+            const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+            const token = await client.tokens.create();
+            const twilioIceServers = JSON.parse(JSON.stringify(token.iceServers));
+            twilioIceServers.forEach((twilioIceServer: { url: string, username?: string, credential?: string }) => {
+                // Filter out turn servers
+                if (twilioIceServer.url.startsWith("turn:")) {
+                    iceServers.push({
+                        credential: twilioIceServer.credential,
+                        credentialType: "password",
+                        urls: twilioIceServer.url,
+                        username: twilioIceServer.username,
+                    });
+                }
+            });
+        } else {
+            iceServers = [
+                {
+                    credential: process.env.TURN_PASSWORD,
+                    credentialType: "password",
+                    urls: [process.env.TURN_URL as string],
+                    username: process.env.TURN_USERNAME,
+                },
+            ];
+        }
+    } catch (err) {
+        logger.error(err);
+        process.exit(-1);
+    }
+
     // we'll name our window after the service url (this is critical, as it's how we'll get the video stream)
     const captureWindowTitle = process.env.SERVICE_URL as string;
 
     // we need to share some state with the capturer (in a different process) - so we set that up here
-    (global as NodeJS.Global & {sharedObject: ISharedObject})[sharedObjectKeyName] = {
+    (global as NodeJS.Global & { sharedObject: ISharedObject })[sharedObjectKeyName] = {
         allowPreload: true,
         captureWindowTitle,
-        iceServers: [
-            {
-                credential: process.env.TURN_PASSWORD,
-                credentialType: "password",
-                urls: [ process.env.TURN_URL as string ],
-                username: process.env.TURN_USERNAME,
-            },
-        ],
+        iceServers: this.iceServers,
         pollInterval: Number.parseInt(process.env.POLL_INTERVAL as string, 10).valueOf(),
         pollUrl: process.env.POLL_URL as string,
     };

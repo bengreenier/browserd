@@ -29,6 +29,8 @@ key and value per line. For example `KEY=value`. Below are the possible options:
 + `HEIGHT` (number) - the window height
 + `WIDTH` (number) - the window width
 + `EXP_HIDE_STREAMER` (boolean) - experiment flag for hiding the streamer window
++ `TWILIO_ACCOUNT_SID` (string) - a Twilio AccountSid required to get a Network Traversal Service Token
++ `TWILIO_AUTH_TOKEN` (string) - a Twilio AuthToken required to get a Network Traversal Service Token
 
 ## Running
 
