@@ -49,7 +49,7 @@ describe("Signal", () => {
       const expectedPeerName = "peerName";
       const expectedPeerId = "123";
       const expectedUrl = `${defaultCtorArgs.url}/sign_in?` +
-      `peer_name=${expectedPeerName}`;
+        `peer_name=${expectedPeerName}`;
       const expectedEmptyData = "";
 
       fetchMock.mockResponseOnce(expectedEmptyData, {
@@ -169,8 +169,8 @@ describe("Signal", () => {
       const expectedRemotePeerId = "321";
 
       fetchMock
-        .mockResponseOnce("", { status: 200 , headers: { pragma: expectedPeerId }})
-        .mockResponseOnce("hello", { status: 200 , headers: { pragma: expectedRemotePeerId }});
+        .mockResponseOnce("", { status: 200, headers: { pragma: expectedPeerId } })
+        .mockResponseOnce("hello", { status: 200, headers: { pragma: expectedRemotePeerId } });
 
       const onPeerMessage = jest.fn();
       const peerMessageCalled = new Promise((resolve) => {
@@ -197,8 +197,8 @@ describe("Signal", () => {
       const expectedParseRaiseEventData = "raised from parsed";
 
       fetchMock
-        .mockResponseOnce("", { status: 200 , headers: { pragma: expectedPeerId }})
-        .mockResponseOnce(expectedPeerData, { status: 200 , headers: { pragma: expectedPeerId }});
+        .mockResponseOnce("", { status: 200, headers: { pragma: expectedPeerId } })
+        .mockResponseOnce(expectedPeerData, { status: 200, headers: { pragma: expectedPeerId } });
 
       // we'll want to assert against the value (ensuring it's raised via our event)
       // so we must actually provide some value
@@ -231,8 +231,8 @@ describe("Signal", () => {
       const expectedRemotePeerId = "321";
 
       fetchMock
-        .mockResponseOnce("", { status: 200 , headers: { pragma: expectedPeerId }})
-        .mockResponseOnce("", { status: 404 , headers: { pragma: expectedRemotePeerId }});
+        .mockResponseOnce("", { status: 200, headers: { pragma: expectedPeerId } })
+        .mockResponseOnce("", { status: 404, headers: { pragma: expectedRemotePeerId } });
 
       const onError = jest.fn();
       const errorCalled = new Promise((resolve) => {

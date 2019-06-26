@@ -1,8 +1,8 @@
 import { config as configEnv } from "dotenv";
 import { app, BrowserWindow } from "electron";
 import { default as pino } from "pino";
-import { default as twilio } from "twilio";
 import { createWindow, ISharedObject, sharedObjectKeyName } from ".";
+import { requestTwilioTurnServer } from "./turn";
 
 const logger = pino();
 logger.info(`working directory: ${process.cwd()}`);
@@ -58,20 +58,7 @@ app.on("ready", async () => {
     try {
         // We prioritize Twilio over coturn for turn servers
         if (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) {
-            const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-            const token = await client.tokens.create();
-            const twilioIceServers = JSON.parse(JSON.stringify(token.iceServers));
-            twilioIceServers.forEach((twilioIceServer: { url: string, username?: string, credential?: string }) => {
-                // Filter out turn servers
-                if (twilioIceServer.url.startsWith("turn:")) {
-                    iceServers.push({
-                        credential: twilioIceServer.credential,
-                        credentialType: "password",
-                        urls: twilioIceServer.url,
-                        username: twilioIceServer.username,
-                    });
-                }
-            });
+            iceServers = await requestTwilioTurnServer(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
         } else {
             iceServers = [
                 {
@@ -94,7 +81,7 @@ app.on("ready", async () => {
     (global as NodeJS.Global & { sharedObject: ISharedObject })[sharedObjectKeyName] = {
         allowPreload: true,
         captureWindowTitle,
-        iceServers: this.iceServers,
+        iceServers,
         pollInterval: Number.parseInt(process.env.POLL_INTERVAL as string, 10).valueOf(),
         pollUrl: process.env.POLL_URL as string,
     };

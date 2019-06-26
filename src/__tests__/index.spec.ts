@@ -1,13 +1,15 @@
 import {
   DesktopCapturer,
   desktopCapturer as hiddenDesktopCapturer,
-  DesktopCapturerSource } from "electron";
+  DesktopCapturerSource,
+} from "electron";
 import { parse as hiddenParseSdp, write as hiddenWriteSdp } from "sdp-transform";
 import {
   forceH264Sdp,
   getDesktopSources,
   parsePeers,
-  selectCaptureSource } from "..";
+  selectCaptureSource,
+} from "..";
 
 const desktopCapturer = hiddenDesktopCapturer as jest.Mocked<DesktopCapturer>;
 const parseSdp = hiddenParseSdp as jest.Mock;
