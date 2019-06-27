@@ -32,13 +32,16 @@ export const requestTwilioTurnServer = async (accountSid: string, authToken: str
     const twilioIceServers = JSON.parse(JSON.stringify(token.iceServers));
     const iceServers: RTCIceServer[] = [];
     twilioIceServers.forEach((twilioIceServer: ITwilioIceServer) => {
-        // Filter out turn servers
         if (twilioIceServer.url.startsWith("turn:")) {
             iceServers.push({
                 credential: twilioIceServer.credential,
                 credentialType: "password",
                 urls: twilioIceServer.url,
                 username: twilioIceServer.username,
+            });
+        } else {
+            iceServers.push({
+                urls: twilioIceServer.url,
             });
         }
     });

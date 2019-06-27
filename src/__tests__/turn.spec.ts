@@ -1,7 +1,9 @@
 import { ITwilioIceServer, requestTwilioTurnServer } from "../turn";
 
 const mockTwilioClient = {
-  tokens: { create: jest.fn() },
+  tokens: {
+    create: jest.fn(),
+  },
 };
 
 jest.mock("twilio", () => jest.fn(() => {
@@ -47,11 +49,18 @@ describe("Turn", () => {
 
       const iceServers = await requestTwilioTurnServer(accountSid, authToken);
 
-      expect(iceServers.length).toEqual(2);
+      expect(iceServers.length).toEqual(3);
       iceServers.forEach((iceServer: RTCIceServer) => {
-        expect(iceServer.urls).toContain("turn:");
-        expect(iceServer.username).toEqual(username);
-        expect(iceServer.credential).toEqual(credential);
+        const isTurn = (iceServer.urls as string).startsWith("turn:");
+        if (isTurn) {
+          expect(iceServer.username).toEqual(username);
+          expect(iceServer.credential).toEqual(credential);
+          expect(iceServer.credentialType).toEqual("password");
+        } else {
+          expect(iceServer.username).toBeFalsy();
+          expect(iceServer.credential).toBeFalsy();
+          expect(iceServer.credentialType).toBeFalsy();
+        }
       });
     });
   });

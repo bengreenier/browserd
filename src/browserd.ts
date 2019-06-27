@@ -55,23 +55,18 @@ app.on("ready", async () => {
     // TURN servers array
     let iceServers: RTCIceServer[] = [];
 
-    try {
-        // We prioritize Twilio over coturn for turn servers
-        if (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) {
-            iceServers = await requestTwilioTurnServer(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-        } else {
-            iceServers = [
-                {
-                    credential: process.env.TURN_PASSWORD,
-                    credentialType: "password",
-                    urls: [process.env.TURN_URL as string],
-                    username: process.env.TURN_USERNAME,
-                },
-            ];
-        }
-    } catch (err) {
-        logger.error(err);
-        process.exit(-1);
+    // We prioritize Twilio over coturn for turn servers
+    if (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) {
+        iceServers = await requestTwilioTurnServer(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+    } else {
+        iceServers = [
+            {
+                credential: process.env.TURN_PASSWORD,
+                credentialType: "password",
+                urls: [process.env.TURN_URL as string],
+                username: process.env.TURN_USERNAME,
+            },
+        ];
     }
 
     // we'll name our window after the service url (this is critical, as it's how we'll get the video stream)
