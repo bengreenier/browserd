@@ -9,7 +9,8 @@ import {
     getDesktopSources,
     ISharedObject,
     selectCaptureSource,
-    sharedObjectKeyName } from ".";
+    sharedObjectKeyName,
+} from ".";
 import { Signal } from "./signal";
 
 const preloadLogger = pino();
@@ -106,7 +107,7 @@ export function startWebrtcProvider(so: ISharedObject, logger: Logger) {
             });
             webrtc.on("data", (data) => {
                 data = data.toString();
-                const imsg = JSON.parse(data) as {type: string, version: number, data: any};
+                const imsg = JSON.parse(data) as { type: string, version: number, data: any };
                 fireInputEvent(captureWindow.webContents, imsg);
             });
         })

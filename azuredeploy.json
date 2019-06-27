@@ -31,18 +31,21 @@
     },
     "envTurnUrl": {
       "type": "string",
+      "defaultValue": "stun:stun.l.google.com:19302",
       "metadata": {
         "description": "a turn address"
       }
     },
     "envTurnUsername": {
       "type": "string",
+      "defaultValue": "",
       "metadata": {
         "description": "a turn username"
       }
     },
     "envTurnPassword": {
       "type": "string",
+      "defaultValue": "",
       "metadata": {
         "description": "a turn password"
       }
@@ -75,6 +78,20 @@
       "type": "string",
       "metadata": {
         "description": "experiment flag for hiding the streamer window"
+      }
+    },
+    "envTwilioAccountSid": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Twilio AccountSid required for Traversal Service Token retrieval"
+      }
+    },
+    "envTwilioAuthToken": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Twilio AuthToken required for Traversal Service Token retrieval"
       }
     }
   },
@@ -132,6 +149,14 @@
                 {
                   "name": "EXP_HIDE_STREAMER",
                   "value": "[parameters('envExpHideStreamer')]"
+                },
+                {
+                  "name": "TWILIO_ACCOUNT_SID",
+                  "value": "[parameters('envTwilioAccountSid')]"
+                },
+                {
+                  "name": "TWILIO_AUTH_TOKEN",
+                  "value": "[parameters('envTwilioAuthToken')]"
                 }
               ]
             }
