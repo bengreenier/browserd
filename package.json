@@ -51,7 +51,6 @@
     "electron-builder": "^20.43.0",
     "jest": "^24.8.0",
     "jest-fetch-mock": "^2.1.2",
-    "jest-mock-object": "^2.1.2",
     "jest-sonar-reporter": "^2.0.0",
     "ts-jest": "^24.0.2",
     "tslint": "^5.17.0",
