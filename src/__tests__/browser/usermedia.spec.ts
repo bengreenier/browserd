@@ -63,12 +63,7 @@ describe("UserMedia", () => {
 
     expect(getUserMedia).toHaveBeenCalledTimes(1);
     expect(getUserMedia).toHaveBeenCalledWith({
-      audio: {
-        mandatory: {
-          chromeMediaSource: "system",
-          chromeMediaSourceId: "test",
-        },
-      },
+      audio: false,
       video: {
         mandatory: {
           chromeMediaSource: "desktop",

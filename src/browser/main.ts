@@ -52,7 +52,7 @@ if (!config[K_PRELOAD_INIT_KEY]) {
     runtimeIgnoredExportValue = app.boot().then(() => {
       logger.info("Browser: booted");
     }, (err) => {
-      logger.error(`Browser: failed to boot: ${err}`);
+      logger.error(`Browser: failed to boot: ${err}`, err.stack);
     });
   } else {
     const errorText = "Browser: could not find capture window";

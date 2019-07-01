@@ -101,7 +101,7 @@ electronApp.on("ready", async () => {
     logger.info("Node: booted");
     runtimeIgnoredExportSuccess();
   }, (err) => {
-    logger.error(`Node: boot failed: ${err}`);
+    logger.error(`Node: boot failed: ${err}`, err.stack);
     runtimeIgnoredExportFailure(err);
   });
 });

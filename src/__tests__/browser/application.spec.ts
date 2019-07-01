@@ -69,6 +69,25 @@ describe("Browser/Application", () => {
     expect(SignalProvider.signIn.mock.calls[0][0]).toMatch(new RegExp(`^${expectedWindowTitle}`));
   });
 
+  it("should error if it cannot find devices", async () => {
+    const expectedIceServers: RTCIceServer[] = [];
+    const expectedWindowTitle = "test";
+    const instance = new Application({
+      captureWindowTitle: expectedWindowTitle,
+      iceServers: expectedIceServers,
+      inputHandler: InputHandler,
+      logger: pino(),
+      signalProvider: SignalProvider,
+      streamProvider: StreamProvider,
+      webrtcProvider: WebrtcProvider,
+    });
+
+    // enmulateate no devices!
+    StreamProvider.enumerateDevices.mockResolvedValueOnce([]);
+
+    await expect(instance.boot()).rejects.toBeInstanceOf(Error);
+  });
+
   it("should handle events", async () => {
     const expectedCandidateData = {
       data: "value",

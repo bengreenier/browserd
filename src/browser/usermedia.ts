@@ -36,23 +36,16 @@ export class UserMedia implements IStreamProvider {
   public async enumerateDevices(filter?: (device: IDeviceInfo) => boolean) {
     const sources = await this.getSourcesAsync();
     return sources.map((source) => {
-      const device: IDeviceInfo = {
+      return {
         id: source.id,
         name: source.name,
-      };
-
-      return device;
+      } as IDeviceInfo;
     }).filter((e) => filter ? filter(e) : true);
   }
 
   public async createStream(device: IDeviceInfo) {
     const media = await this.opts.getUserMedia({
-      audio: {
-        mandatory: {
-          chromeMediaSource: "system",
-          chromeMediaSourceId: device.id,
-        },
-      },
+      audio: false,
       video: {
         mandatory: {
           chromeMediaSource: "desktop",

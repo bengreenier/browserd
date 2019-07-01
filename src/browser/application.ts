@@ -74,8 +74,25 @@ export class Application implements IApplication {
       inputHandler } = this.opts;
     logger.info("Browser: initializing application");
 
-    const devices = await streamProvider.enumerateDevices((e) => e.name === captureWindowTitle);
-    const selectedDevice = devices[0];
+    const rawDevices = await streamProvider.enumerateDevices();
+    const matchedDevice = rawDevices.find((e) => e.name === captureWindowTitle);
+
+    if (rawDevices.length > 0) {
+      logger.info("Browser: found available devices", rawDevices);
+    } else {
+      throw new Error(`Unable to find devices`);
+    }
+
+    if (matchedDevice) {
+      logger.info(`Browser: found device matching ${captureWindowTitle}`, matchedDevice);
+    } else {
+      logger.info(`Browser: selecting first device`, rawDevices[0]);
+    }
+
+    const selectedDevice = matchedDevice || rawDevices[0];
+
+    logger.info("Browser: selected device", selectedDevice);
+
     const stream = await streamProvider.createStream(selectedDevice);
 
     webrtcProvider.initialize(iceServers, stream);
