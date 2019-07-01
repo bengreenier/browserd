@@ -1,6 +1,7 @@
 import pino from "pino";
 import {
-  K_BROWSER_STORAGE, K_PRELOAD_LOGGER_KEY,
+  K_BROWSER_STORAGE,
+  K_PRELOAD_LOGGER_KEY,
 } from "../../base/constants";
 import { Application as BrowserApplication } from "../../browser/application";
 
