@@ -1,7 +1,12 @@
-import { parsePeers } from "..";
-import { ISignalOpts, Signal } from "../signal";
+import { default as fetchFill, GlobalWithFetchMock } from "jest-fetch-mock";
+import { ISignalOpts, Signal } from "../../browser/signal";
 
-jest.mock("../index");
+// mock global.fetch and provide global.fetchMock to control it
+{
+  const customGlobal: GlobalWithFetchMock = global as GlobalWithFetchMock;
+  customGlobal.fetch = fetchFill as any;
+  customGlobal.fetchMock = customGlobal.fetch;
+}
 
 describe("Signal", () => {
   const defaultCtorArgs: ISignalOpts = {
@@ -68,7 +73,16 @@ describe("Signal", () => {
     it("should sign in (other peers)", async () => {
       const expectedPeerName = "peerName";
       const expectedPeerId = "123";
-      const expectedPeerData = "remotePeer,321,1";
+      const expectedRemoteId = "321";
+      const expectedRemoteName = "remotePeer";
+      const expectedPeerData = `${expectedRemoteName},${expectedRemoteId},1`;
+      const expectedPeerEventData = [
+        {
+          connected: true,
+          id: expectedRemoteId,
+          name: expectedRemoteName,
+        },
+      ];
 
       fetchMock.mockResponseOnce(expectedPeerData, {
         headers: {
@@ -76,13 +90,18 @@ describe("Signal", () => {
         },
       });
 
-      await testInstance.signIn(expectedPeerName);
-      expect(parsePeers).toHaveBeenCalledTimes(1);
-      expect(parsePeers).toHaveBeenCalledWith(expectedPeerData);
+      const eventData = await testInstance.signIn(expectedPeerName);
+      expect(eventData).toEqual(expectedPeerEventData);
     });
 
     it("should gracefully fail to sign in", async () => {
       fetchMock.mockRejectOnce(new Error("Mock Failure"));
+
+      await expect(testInstance.signIn("peerName")).rejects.toBeInstanceOf(Error);
+    });
+
+    it("should gracefully fail if response is not ok", async () => {
+      fetchMock.mockResponse("", { status: 500 });
 
       await expect(testInstance.signIn("peerName")).rejects.toBeInstanceOf(Error);
     });
@@ -121,6 +140,12 @@ describe("Signal", () => {
 
     it("should gracefully fail to sign out", async () => {
       fetchMock.mockRejectOnce(new Error("Mock Failure"));
+
+      await expect(testInstance.signOut()).rejects.toBeInstanceOf(Error);
+    });
+
+    it("should gracefully fail if response is not ok", async () => {
+      fetchMock.mockResponse("", { status: 500 });
 
       await expect(testInstance.signOut()).rejects.toBeInstanceOf(Error);
     });
@@ -193,18 +218,17 @@ describe("Signal", () => {
     it("should peer update", async () => {
       const expectedPeerId = "123";
       const expectedRemotePeerId = "321";
-      const expectedPeerData = `remote,${expectedRemotePeerId},1`;
-      const expectedParseRaiseEventData = "raised from parsed";
+      const expectedRemoteName = "remote";
+      const expectedPeerData = `${expectedRemoteName},${expectedRemotePeerId},1`;
+      const expectedEventData = [{
+        connected: true,
+        id: expectedRemotePeerId,
+        name: expectedRemoteName,
+      }];
 
       fetchMock
         .mockResponseOnce("", { status: 200, headers: { pragma: expectedPeerId } })
         .mockResponseOnce(expectedPeerData, { status: 200, headers: { pragma: expectedPeerId } });
-
-      // we'll want to assert against the value (ensuring it's raised via our event)
-      // so we must actually provide some value
-      (parsePeers as jest.Mock).mockImplementation(() => {
-        return expectedParseRaiseEventData;
-      });
 
       const onPeerUpdate = jest.fn();
       const peerUpdateCalled = new Promise((resolve) => {
@@ -219,11 +243,8 @@ describe("Signal", () => {
       jest.advanceTimersByTime(1000);
 
       await peerUpdateCalled;
-      // expect this is called 2x, one during signIn
-      expect(parsePeers).toHaveBeenCalledTimes(2);
-      expect(parsePeers).toHaveBeenLastCalledWith(expectedPeerData);
       expect(onPeerUpdate).toHaveBeenCalledTimes(1);
-      expect(onPeerUpdate).toHaveBeenCalledWith(expectedParseRaiseEventData);
+      expect(onPeerUpdate).toHaveBeenCalledWith(expectedEventData);
     });
 
     it("should error (404)", async () => {
