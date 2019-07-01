@@ -1,10 +1,14 @@
+import pino from "pino";
 import {
-  K_BROWSER_STORAGE,
+  K_BROWSER_STORAGE, K_PRELOAD_LOGGER_KEY,
 } from "../../base/constants";
 import { Application as BrowserApplication } from "../../browser/application";
 
+jest.mock("pino");
 jest.mock("electron", () => {
   const glob: {[key: string]: any} = {};
+
+  glob[K_PRELOAD_LOGGER_KEY] = pino();
   glob[K_BROWSER_STORAGE] = {};
 
   return {

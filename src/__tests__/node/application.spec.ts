@@ -4,7 +4,9 @@ import {
   K_BROWSER_CONFIG,
   K_BROWSER_STORAGE,
   K_CAPTURE_WIN,
-  K_SIGNAL_CONFIG } from "../../base/constants";
+  K_PRELOAD_LOGGER_KEY,
+  K_SIGNAL_CONFIG,
+} from "../../base/constants";
 import { IWindow, IWindowProvider } from "../../base/window-provider";
 import { Application } from "../../node/application";
 
@@ -28,12 +30,13 @@ describe("Application", () => {
     const expectedPollUrl = "http://poll.test.com";
     const expectedInterval = 1020;
     const expectedIceServers: RTCIceServer[] = [];
+    const expectedLogger = pino();
 
     const instance = new Application({
       captureWindowTitle: expectedWindowTitle,
       expHideStreamer: expectedHideStreamer,
       height: expectedHeight,
-      logger: pino(),
+      logger: expectedLogger,
       signalConfig: {
         pollIntervalMs: expectedInterval,
         url: expectedPollUrl,
@@ -69,6 +72,7 @@ describe("Application", () => {
     expect(Window.hide).toHaveBeenCalledTimes(1);
 
     const globalStorage: {[key: string]: any} = {};
+    globalStorage[K_PRELOAD_LOGGER_KEY] = expectedLogger;
     globalStorage[K_CAPTURE_WIN] = expectedWindowTitle;
     globalStorage[K_BROWSER_CONFIG] = {
       iceServers: expectedIceServers,

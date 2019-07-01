@@ -1,10 +1,11 @@
 import { desktopCapturer, remote } from "electron";
-import pino from "pino";
+import { Logger } from "pino";
 import {
   K_BROWSER_CONFIG,
   K_BROWSER_STORAGE,
   K_CAPTURE_WIN,
   K_PRELOAD_INIT_KEY,
+  K_PRELOAD_LOGGER_KEY,
   K_SIGNAL_CONFIG,
 } from "../base/constants";
 import { Application } from "./application";
@@ -18,8 +19,8 @@ import { UserMedia } from "./usermedia";
 // it won't impact the runtime as the runtime ignores it
 let runtimeIgnoredExportValue: Promise<void>;
 
-const logger = pino();
 const config = remote.getGlobal(K_BROWSER_STORAGE);
+const logger: Logger = config[K_PRELOAD_LOGGER_KEY];
 
 if (!config[K_PRELOAD_INIT_KEY]) {
   // indicate that we've booted, and future preloads should not boot again
