@@ -1,6 +1,14 @@
 import { Application as NodeApplication } from "../../node/application";
 
 (process.exit as any) = jest.fn();
+process.env = {
+  EXP_HIDE_STREAMER: "false",
+  HEIGHT: "10",
+  POLL_INTERVAL: "10",
+  POLL_URL: "http://url.com",
+  SERVICE_URL: "http://url.com",
+  WIDTH: "10",
+};
 
 jest.mock("electron", () => {
   return {

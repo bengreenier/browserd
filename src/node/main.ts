@@ -35,9 +35,8 @@ const dotenv = config();
 let mutableEnv: {[key: string]: string | undefined} = {};
 if (dotenv.error) {
   logger.warn(`dotenv failed: ${dotenv.error}`);
-} else {
-  mutableEnv = {...process.env, ...dotenv.parsed};
 }
+mutableEnv = {...process.env, ...dotenv.parsed};
 const env: {[key: string]: string} = mutableEnv as {[key: string]: string};
 
 // early exit if missing critical environment variables
