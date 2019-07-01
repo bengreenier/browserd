@@ -8,7 +8,7 @@ import { Win } from "./win";
 // it won't impact the runtime as the runtime ignores it
 let runtimeIgnoredExportSuccess: () => void;
 let runtimeIgnoredExportFailure: (err: Error) => void;
-let runtimeIgnoredExportValue: Promise<void> = new Promise((resolve, reject) => {
+const runtimeIgnoredExportValue: Promise<void> = new Promise((resolve, reject) => {
   runtimeIgnoredExportSuccess = resolve;
   runtimeIgnoredExportFailure = reject;
 });
