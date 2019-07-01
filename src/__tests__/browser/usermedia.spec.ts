@@ -35,6 +35,18 @@ describe("UserMedia", () => {
     });
   });
 
+  it("should reject when getSources fails", async () => {
+    const getSources = jest.fn().mockImplementationOnce((_, cb: (err: Error) => void) => {
+      cb(new Error("test failure"));
+    });
+    const instance = new UserMedia({
+      getSources,
+      getUserMedia: jest.fn(),
+    });
+
+    await expect(instance.enumerateDevices()).rejects.toBeInstanceOf(Error);
+  });
+
   it("should attempt to getUserMedia", async () => {
     const getUserMedia = jest.fn();
     const instance = new UserMedia({

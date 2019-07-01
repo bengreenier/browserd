@@ -83,17 +83,24 @@ describe("Browser/Application", () => {
     const expectedPeerId = "12";
     const expectedIceServers: RTCIceServer[] = [];
     const expectedWindowTitle = "test";
+    const logger = pino();
     const instance = new Application({
       captureWindowTitle: expectedWindowTitle,
       iceServers: expectedIceServers,
       inputHandler: InputHandler,
-      logger: pino(),
+      logger,
       signalProvider: SignalProvider,
       streamProvider: StreamProvider,
       webrtcProvider: WebrtcProvider,
     });
 
     await instance.boot();
+
+    // the 1st call (index 0) is the .on("error") handler registration
+    // so this tests that if an error occurs, the following occurs
+    SignalProvider.on.mock.calls[0][1](new Error("test"));
+    expect(logger.error).toHaveBeenCalledTimes(1);
+    expect(logger.error).toHaveBeenCalledWith("Browser: signal error: Error: test");
 
     // the 2nd call (index 1) is the .on("peer-message") handler registration
     // so this tests that if the signal provider has a peer-message, the following occurs

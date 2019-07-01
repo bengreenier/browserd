@@ -45,9 +45,8 @@ export class H264Sdp implements ISdpHandler {
 
         // finally, save the payloads literal back to the media line
         media.payloads = payloads.join(" ");
-
-        return media as any;
       }
+      return media as any;
     });
 
     // modify mLine to contain only h264 codec

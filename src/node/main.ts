@@ -4,6 +4,14 @@ import pino from "pino";
 import { Application } from "./application";
 import { requestTwilioTurnServer } from "./turn";
 import { Win } from "./win";
+// we'll export this and use it for testing
+// it won't impact the runtime as the runtime ignores it
+let runtimeIgnoredExportSuccess: () => void;
+let runtimeIgnoredExportFailure: (err: Error) => void;
+let runtimeIgnoredExportValue: Promise<void> = new Promise((resolve, reject) => {
+  runtimeIgnoredExportSuccess = resolve;
+  runtimeIgnoredExportFailure = reject;
+});
 
 const logger = pino();
 
@@ -59,8 +67,11 @@ electronApp.on("ready", async () => {
   ];
 
   // if we have twilio info, we'll use that (overriding raw TURN credentials)
-  if (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) {
-    iceServers = await requestTwilioTurnServer(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+  if (env.TWILIO_ACCOUNT_SID && env.TWILIO_AUTH_TOKEN) {
+    iceServers = await requestTwilioTurnServer(env.TWILIO_ACCOUNT_SID, env.TWILIO_AUTH_TOKEN).catch((err: any) => {
+      logger.error(`Node: Twilio failed: ${err}`);
+      process.exit(-2);
+    }).then(() => []);
     logger.info("Node: using Twilio");
   }
 
@@ -87,3 +98,5 @@ electronApp.on("ready", async () => {
     logger.error(`Node: boot failed: ${err}`);
   });
 });
+
+module.exports = runtimeIgnoredExportValue;

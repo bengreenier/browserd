@@ -14,6 +14,10 @@ import { Peer } from "./peer";
 import { Signal } from "./signal";
 import { UserMedia } from "./usermedia";
 
+// we'll export this and use it for testing
+// it won't impact the runtime as the runtime ignores it
+let runtimeIgnoredExportValue: Promise<void>;
+
 const logger = pino();
 const config = remote.getGlobal(K_BROWSER_STORAGE);
 
@@ -45,14 +49,20 @@ if (!config[K_PRELOAD_INIT_KEY]) {
       }),
     });
 
-    app.boot().then(() => {
+    runtimeIgnoredExportValue = app.boot().then(() => {
       logger.info("Browser: booted");
     }, (err) => {
       logger.error(`Browser: failed to boot: ${err}`);
     });
   } else {
-    logger.error("Browser: could not find capture window", captureWindowTitle);
+    const errorText = "Browser: could not find capture window";
+    logger.error(errorText, captureWindowTitle);
+    runtimeIgnoredExportValue = Promise.reject(errorText);
   }
 } else {
-  logger.error("Browser: could not re-boot");
+  const errorText = "Browser: could not re-boot";
+  logger.error(errorText);
+  runtimeIgnoredExportValue = Promise.reject(errorText);
 }
+
+module.exports = runtimeIgnoredExportValue;

@@ -100,6 +100,12 @@ describe("Signal", () => {
       await expect(testInstance.signIn("peerName")).rejects.toBeInstanceOf(Error);
     });
 
+    it("should gracefully fail if response in not ok", async () => {
+      fetchMock.mockResponse("", { status: 500 });
+
+      await expect(testInstance.signIn("peerName")).rejects.toBeInstanceOf(Error);
+    });
+
     it("should fail if no peer id is returned", async () => {
       fetchMock.mockResponseOnce("", {
         headers: {},
@@ -134,6 +140,12 @@ describe("Signal", () => {
 
     it("should gracefully fail to sign out", async () => {
       fetchMock.mockRejectOnce(new Error("Mock Failure"));
+
+      await expect(testInstance.signOut()).rejects.toBeInstanceOf(Error);
+    });
+
+    it("should gracefully fail if response in not ok", async () => {
+      fetchMock.mockResponse("", { status: 500 });
 
       await expect(testInstance.signOut()).rejects.toBeInstanceOf(Error);
     });

@@ -72,4 +72,23 @@ describe("H264Sdp", () => {
     expect(parseSdp).toHaveBeenCalledWith("");
     expect(writeSdp).toHaveBeenCalledTimes(0);
   });
+
+  it("should not touch non video", () => {
+    const sdp = {
+      media: [{
+        otherData: "exists",
+        type: "audio",
+      }],
+    };
+    parseSdp.mockImplementationOnce((data: string) => {
+      return JSON.parse(data);
+    });
+    writeSdp.mockImplementationOnce((data: string) => {
+      return JSON.stringify(data);
+    });
+
+    const res = JSON.parse(instance.transformSdp(JSON.stringify(sdp)));
+
+    expect(res).toEqual(sdp);
+  });
 });
