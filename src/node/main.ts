@@ -51,8 +51,10 @@ const env: {[key: string]: string} = mutableEnv as {[key: string]: string};
 ].filter((expectedEnvKey) => {
   return env[expectedEnvKey] === undefined;
 }).forEach((key) => {
-  logger.error(`missing env: ${key}`);
+  const errorText = `missing env: ${key}`;
+  logger.error(errorText);
   process.exit(-1);
+  runtimeIgnoredExportFailure(new Error(errorText));
 });
 
 // keep the app in global memory, to prevent gc
@@ -71,8 +73,10 @@ electronApp.on("ready", async () => {
   // if we have twilio info, we'll use that (overriding raw TURN credentials)
   if (env.TWILIO_ACCOUNT_SID && env.TWILIO_AUTH_TOKEN) {
     iceServers = await requestTwilioTurnServer(env.TWILIO_ACCOUNT_SID, env.TWILIO_AUTH_TOKEN).catch((err: any) => {
-      logger.error(`Node: Twilio failed: ${err}`);
+      const errorText = `Node: Twilio failed: ${err}`;
+      logger.error(errorText);
       process.exit(-2);
+      runtimeIgnoredExportFailure(new Error(errorText));
     }).then(() => []);
     logger.info("Node: using Twilio");
   }
@@ -96,8 +100,10 @@ electronApp.on("ready", async () => {
 
   app.boot().then(() => {
     logger.info("Node: booted");
+    runtimeIgnoredExportSuccess();
   }, (err) => {
     logger.error(`Node: boot failed: ${err}`);
+    runtimeIgnoredExportFailure(err);
   });
 });
 

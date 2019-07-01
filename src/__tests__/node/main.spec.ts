@@ -27,8 +27,10 @@ jest.mock("../../node/application", () => {
 
 describe("main.node", () => {
   // TODO(bengreenier): make this test (and it's mocks) more robust
-  it("should eval", () => {
+  it("should eval", async () => {
     const runtimeExportValue = require("../../node/main");
+
+    await runtimeExportValue;
 
     expect(Application.boot).toHaveBeenCalledTimes(1);
   });
