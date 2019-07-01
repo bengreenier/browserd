@@ -49,7 +49,7 @@ type SignalEmitter = StrictEventEmitter<EventEmitter, ISignalProviderEvents>;
 /**
  * The base signal provider type
  */
-export abstract class ISignalProvider extends (EventEmitter as new() => SignalEmitter) {
+export abstract class BaseSignalProvider extends (EventEmitter as new() => SignalEmitter) {
   /**
    * The assigned peer id from the remote signal provider
    */

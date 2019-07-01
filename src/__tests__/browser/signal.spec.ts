@@ -1,11 +1,11 @@
-import {default as fetchFill, GlobalWithFetchMock} from "jest-fetch-mock";
+import { default as fetchFill, GlobalWithFetchMock } from "jest-fetch-mock";
 import { ISignalOpts, Signal } from "../../browser/signal";
 
 // mock global.fetch and provide global.fetchMock to control it
 {
-const customGlobal: GlobalWithFetchMock = global as GlobalWithFetchMock;
-customGlobal.fetch = fetchFill as any;
-customGlobal.fetchMock = customGlobal.fetch;
+  const customGlobal: GlobalWithFetchMock = global as GlobalWithFetchMock;
+  customGlobal.fetch = fetchFill as any;
+  customGlobal.fetchMock = customGlobal.fetch;
 }
 
 describe("Signal", () => {
@@ -100,7 +100,7 @@ describe("Signal", () => {
       await expect(testInstance.signIn("peerName")).rejects.toBeInstanceOf(Error);
     });
 
-    it("should gracefully fail if response in not ok", async () => {
+    it("should gracefully fail if response is not ok", async () => {
       fetchMock.mockResponse("", { status: 500 });
 
       await expect(testInstance.signIn("peerName")).rejects.toBeInstanceOf(Error);
@@ -144,7 +144,7 @@ describe("Signal", () => {
       await expect(testInstance.signOut()).rejects.toBeInstanceOf(Error);
     });
 
-    it("should gracefully fail if response in not ok", async () => {
+    it("should gracefully fail if response is not ok", async () => {
       fetchMock.mockResponse("", { status: 500 });
 
       await expect(testInstance.signOut()).rejects.toBeInstanceOf(Error);

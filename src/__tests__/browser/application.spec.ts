@@ -1,19 +1,19 @@
 import pino from "pino";
 import { IInputHandler } from "../../base/input-handler";
-import { ISignalProvider } from "../../base/signal-provider";
+import { BaseSignalProvider } from "../../base/signal-provider";
 import { IDeviceInfo, IStream, IStreamProvider } from "../../base/stream-provider";
-import { IWebrtcProvider } from "../../base/webrtc-provider";
+import { BaseWebrtcProvider } from "../../base/webrtc-provider";
 import { Application } from "../../browser/application";
 
 jest.mock("pino");
 
-const SignalProvider: jest.Mocked<ISignalProvider> = {
+const SignalProvider: jest.Mocked<BaseSignalProvider> = {
   destroy: jest.fn(),
   on: jest.fn(),
   send: jest.fn().mockImplementation(() => Promise.resolve()),
   signIn: jest.fn().mockResolvedValue([]),
   signOut: jest.fn().mockImplementation(() => Promise.resolve()),
-} as Partial<ISignalProvider> as any;
+} as Partial<BaseSignalProvider> as any;
 
 const Stream: jest.Mocked<IStream> = {
   toMediaStream: jest.fn(),
@@ -29,12 +29,12 @@ const StreamProvider: jest.Mocked<IStreamProvider> = {
   enumerateDevices: jest.fn().mockResolvedValue([Device]),
 } as Partial<IStreamProvider> as any;
 
-const WebrtcProvider: jest.Mocked<IWebrtcProvider> = {
+const WebrtcProvider: jest.Mocked<BaseWebrtcProvider> = {
   destroy: jest.fn(),
   initialize: jest.fn(),
   on: jest.fn(),
   signal: jest.fn(),
-} as Partial<IWebrtcProvider> as any;
+} as Partial<BaseWebrtcProvider> as any;
 
 const InputHandler: jest.Mocked<IInputHandler> = {
   processAndRaiseMessage: jest.fn(),
@@ -82,7 +82,7 @@ describe("Browser/Application", () => {
       webrtcProvider: WebrtcProvider,
     });
 
-    // enmulateate no devices!
+    // emulate no devices!
     StreamProvider.enumerateDevices.mockResolvedValueOnce([]);
 
     await expect(instance.boot()).rejects.toBeInstanceOf(Error);

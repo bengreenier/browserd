@@ -2,9 +2,9 @@ import { Logger } from "pino";
 import { v4 as uuid } from "uuid";
 import { IApplication } from "../base/application";
 import { IInputHandler, IInputMessage } from "../base/input-handler";
-import { ISignalProvider } from "../base/signal-provider";
+import { BaseSignalProvider } from "../base/signal-provider";
 import { IStreamProvider } from "../base/stream-provider";
-import { IWebrtcProvider } from "../base/webrtc-provider";
+import { BaseWebrtcProvider } from "../base/webrtc-provider";
 
 /**
  * Application constructor options
@@ -28,7 +28,7 @@ export interface IApplicationOpts {
   /**
    * The signal provider to use
    */
-  signalProvider: ISignalProvider;
+  signalProvider: BaseSignalProvider;
 
   /**
    * The stream provider to use
@@ -38,7 +38,7 @@ export interface IApplicationOpts {
   /**
    * The webrtc provider to use
    */
-  webrtcProvider: IWebrtcProvider;
+  webrtcProvider: BaseWebrtcProvider;
 
   /**
    * The input handler to use
@@ -75,13 +75,14 @@ export class Application implements IApplication {
     logger.info("Browser: initializing application");
 
     const rawDevices = await streamProvider.enumerateDevices();
-    const matchedDevice = rawDevices.find((e) => e.name === captureWindowTitle);
 
     if (rawDevices.length > 0) {
       logger.info("Browser: found available devices", rawDevices);
     } else {
       throw new Error(`Unable to find devices`);
     }
+
+    const matchedDevice = rawDevices.find((e) => e.name === captureWindowTitle);
 
     if (matchedDevice) {
       logger.info(`Browser: found device matching ${captureWindowTitle}`, matchedDevice);

@@ -1,7 +1,7 @@
 import SimplePeer from "simple-peer";
 import { ISdpHandler } from "../base/sdp-handler";
 import { IStream } from "../base/stream-provider";
-import { IWebrtcProvider } from "../base/webrtc-provider";
+import { BaseWebrtcProvider } from "../base/webrtc-provider";
 
 /**
  * Peer constructor options
@@ -16,7 +16,7 @@ export interface IPeerOpts {
 /**
  * A peer webrtc provider
  */
-export class Peer extends IWebrtcProvider {
+export class Peer extends BaseWebrtcProvider {
   private instance?: SimplePeer.Instance;
   private sdpHandler: ISdpHandler;
 

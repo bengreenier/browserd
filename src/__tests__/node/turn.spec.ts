@@ -40,7 +40,7 @@ describe("Turn", () => {
       await expect(requestTwilioTurnServer(accountSid, authToken)).rejects.toThrowError();
     });
 
-    it("should return only turn servers", async () => {
+    it("should return valid turn servers", async () => {
       const accountSid = "fakeAccountSid";
       const authToken = "fakeAuthToken";
       mockTwilioClient.tokens.create.mockImplementation(() => {

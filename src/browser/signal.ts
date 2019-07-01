@@ -1,5 +1,5 @@
 import * as url from "url";
-import { ISignalPeer, ISignalProvider } from "../base/signal-provider";
+import { ISignalPeer, BaseSignalProvider } from "../base/signal-provider";
 
 /**
  * Signal constructor options
@@ -20,7 +20,7 @@ export interface ISignalOpts {
  * Http signaling server client
  * Note: speaks the protocol defined @ https://github.com/bengreenier/webrtc-signal-http
  */
-export class Signal extends ISignalProvider {
+export class Signal extends BaseSignalProvider {
   /**
    * The signaling address
    */

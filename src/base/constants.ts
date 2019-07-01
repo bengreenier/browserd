@@ -1,7 +1,7 @@
 /**
  * Flag used to store browser/main boot up data
  */
-export const K_BROWSER_STORAGE = "__browser_store";
+export const K_BROWSER_STORAGE = "__browser-store";
 
 /**
  * Flag used to check if our preload script is allowed to run

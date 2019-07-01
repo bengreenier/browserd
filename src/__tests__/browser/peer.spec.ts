@@ -1,6 +1,6 @@
 import { Instance as SimplePeerInstance } from "simple-peer";
 import { IStream } from "../../base/stream-provider";
-import { IWebrtcProvider } from "../../base/webrtc-provider";
+import { BaseWebrtcProvider } from "../../base/webrtc-provider";
 import { Peer } from "../../browser/peer";
 
 const SimplePeer: jest.Mocked<SimplePeerInstance> = {
@@ -45,7 +45,7 @@ describe("Peer", () => {
 
     instance.initialize([], expectedStream);
 
-    expect(IWebrtcProvider).toHaveBeenCalledTimes(1);
+    expect(BaseWebrtcProvider).toHaveBeenCalledTimes(1);
 
     expect(LastAllocatedSimplePeerCtor).toHaveBeenCalledTimes(1);
     const ctorOpts = LastAllocatedSimplePeerCtor.mock.calls[0][0];

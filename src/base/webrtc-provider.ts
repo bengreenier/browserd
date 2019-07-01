@@ -40,7 +40,7 @@ type WebrtcEmitter = StrictEventEmitter<EventEmitter, IWebrtcProviderEvents>;
 /**
  * The base webrtc provider type
  */
-export abstract class IWebrtcProvider extends (EventEmitter as new() => WebrtcEmitter) {
+export abstract class BaseWebrtcProvider extends (EventEmitter as new() => WebrtcEmitter) {
   /**
    * Initialize the provider for use
    * Note: multiple calls are not permitted without first calling {destroy()}
