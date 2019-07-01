@@ -78,7 +78,7 @@ electronApp.on("ready", async () => {
   }
 
   app = new Application({
-    captureWindowTitle: url.parse(env.SERVICE_URL).hostname as string,
+    captureWindowTitle: url.parse(env.SERVICE_URL || "no-window").hostname as string,
     expHideStreamer: env.EXP_HIDE_STREAMER === "true",
     height: Number.parseInt(env.HEIGHT, 10).valueOf(),
     logger,
