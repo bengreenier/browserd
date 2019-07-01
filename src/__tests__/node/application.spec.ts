@@ -57,10 +57,10 @@ describe("Application", () => {
       url: expectedUrl,
       width: expectedWidth,
     });
-    // note: the width and height here are __not__ driven by config
+    // note: the values here are __not__ driven by config
     expect(WinProvider.createWindow).toHaveBeenNthCalledWith(2, {
       height: 10,
-      url: "https://github.com/bengreenier/browserd",
+      url: "chrome://webrtc-internals",
       webPreferences: {
         preload: path.join(__dirname, "../../browser/main.js"),
       },

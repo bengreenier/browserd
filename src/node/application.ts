@@ -116,7 +116,7 @@ export class Application implements IApplication {
 
     const streamerWindow = await winProvider.createWindow({
       height: 10,
-      url: "https://github.com/bengreenier/browserd",
+      url: "chrome://webrtc-internals",
       webPreferences: {
         // this is what triggers our actual streamer logic (webrtc init and whatnot)
         preload: path.join(__dirname, "/../browser/main.js"),

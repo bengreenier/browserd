@@ -1,9 +1,11 @@
 import { config } from "dotenv";
 import { app as electronApp } from "electron";
 import pino from "pino";
+import url from "url";
 import { Application } from "./application";
 import { requestTwilioTurnServer } from "./turn";
 import { Win } from "./win";
+
 // we'll export this and use it for testing
 // it won't impact the runtime as the runtime ignores it
 let runtimeIgnoredExportSuccess: () => void;
@@ -76,7 +78,7 @@ electronApp.on("ready", async () => {
   }
 
   app = new Application({
-    captureWindowTitle: env.SERVICE_URL,
+    captureWindowTitle: url.parse(env.SERVICE_URL).hostname as string,
     expHideStreamer: env.EXP_HIDE_STREAMER === "true",
     height: Number.parseInt(env.HEIGHT, 10).valueOf(),
     logger,
