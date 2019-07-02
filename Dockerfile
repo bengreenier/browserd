@@ -14,7 +14,8 @@ RUN groupadd -r electron \
   && useradd -r -g electron -G audio,video,tty,dialout electron \
   && mkdir -p /home/electron/Downloads \
   && chown -R electron:electron /home/electron \
-  && mkdir /home/electron/.config
+  && mkdir /home/electron/.config \
+  && chown -R electron:electron /home/electron/.config
 WORKDIR /home/electron/browserd
 COPY --from=builder /usr/app/builder/bin/*.deb ./
 
@@ -26,6 +27,15 @@ RUN apt-get update -y \
   && rm -rf /var/lib/apt/lists/*
 
 FROM runner as release
-USER electron
-CMD xvfb-run -s '-ac -br -nocursor -screen 0 1920x1080x24 -nolisten tcp' \
-  browserd --no-sandbox --disable-gpu
+# we start as root, so that we can start dbus
+# note: our CMD will drop us into the electron user
+USER root
+
+# as root:
+# start dbus system
+# as electron:
+# start dbus session
+# start x11 session (xvfb)
+# start browserd
+CMD service dbus start \
+  && su electron -c 'dbus-run-session -- xvfb-run -s "-ac -br -nocursor -screen 0 1920x1080x24 -nolisten tcp" browserd --no-sandbox --disable-gpu'
