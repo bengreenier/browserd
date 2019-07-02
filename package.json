@@ -16,6 +16,12 @@
     "name": "bengreenier",
     "email": "ben+npm@bengreenier.com"
   },
+  "contributors": [
+    {
+      "name": "phongcao",
+      "email": "phong.caothai@live.com"
+    }
+  ],
   "license": "MIT",
   "homepage": "https://github.com/bengreenier/browserd",
   "build": {
