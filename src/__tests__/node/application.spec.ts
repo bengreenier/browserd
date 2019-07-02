@@ -4,7 +4,8 @@ import {
   K_BROWSER_CONFIG,
   K_BROWSER_STORAGE,
   K_CAPTURE_WIN,
-  K_SIGNAL_CONFIG } from "../../base/constants";
+  K_SIGNAL_CONFIG,
+} from "../../base/constants";
 import { IWindow, IWindowProvider } from "../../base/window-provider";
 import { Application } from "../../node/application";
 
@@ -55,6 +56,9 @@ describe("Application", () => {
       height: expectedHeight,
       title: expectedWindowTitle,
       url: expectedUrl,
+      webPreferences: {
+        contextIsolation: true,
+      },
       width: expectedWidth,
     });
     // note: the values here are __not__ driven by config
@@ -68,7 +72,7 @@ describe("Application", () => {
     });
     expect(Window.hide).toHaveBeenCalledTimes(1);
 
-    const globalStorage: {[key: string]: any} = {};
+    const globalStorage: { [key: string]: any } = {};
     globalStorage[K_CAPTURE_WIN] = expectedWindowTitle;
     globalStorage[K_BROWSER_CONFIG] = {
       iceServers: expectedIceServers,

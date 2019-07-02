@@ -97,6 +97,9 @@ export class Application implements IApplication {
       height,
       title: captureWindowTitle,
       url,
+      webPreferences: {
+        contextIsolation: true,
+      },
       width,
     });
 
