@@ -1,4 +1,5 @@
 import { BrowserWindow as ElectronBrowserWindow } from "electron";
+import pino from "pino";
 import { IWindowConstructorOpts, IWindowProvider } from "../base/window-provider";
 import { BrowserWindow } from "./browser-window";
 
@@ -7,6 +8,8 @@ import { BrowserWindow } from "./browser-window";
  */
 export class Win implements IWindowProvider {
   public async createWindow(opts: IWindowConstructorOpts) {
+    const logger = pino();
+    const originalURL = new URL(opts.url);
     const win = new BrowserWindow(new ElectronBrowserWindow({
       ...opts,
       show: false,
@@ -18,6 +21,20 @@ export class Win implements IWindowProvider {
     // block middle-clicking, which opens a new window
     rawWin.webContents.on("new-window", (e) => {
       e.preventDefault();
+    });
+
+    rawWin.webContents.on("did-start-navigation", (_, url) => {
+      const newURL = new URL(url);
+
+      // warn about using insecure HTTP connections
+      if (newURL.protocol === "http:") {
+        logger.warn("Using HTTP as the transport: " + url);
+      }
+
+      // warn about navigating to different origins
+      if (newURL.hostname && newURL.hostname !== originalURL.hostname) {
+        logger.warn("Navigating to a different origin: " + newURL.hostname);
+      }
     });
 
     rawWin.on("page-title-updated", (e) => {
