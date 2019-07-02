@@ -58,6 +58,7 @@ describe("Application", () => {
       url: expectedUrl,
       webPreferences: {
         contextIsolation: true,
+        disableBlinkFeatures: "Auxclick",
       },
       width: expectedWidth,
     });

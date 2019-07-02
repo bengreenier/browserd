@@ -1,6 +1,11 @@
 import { BrowserWindow as ElectronBrowserWindow, Event as ElectronEvent } from "electron";
 import { Win } from "../../node/win";
 
+const webContents = {
+  loadURL: jest.fn(),
+  on: jest.fn(),
+} as any;
+
 const BrowserWindow: jest.Mocked<ElectronBrowserWindow> = {
   loadURL: jest.fn().mockImplementation(() => Promise.resolve()),
   on: jest.fn(),
@@ -8,9 +13,10 @@ const BrowserWindow: jest.Mocked<ElectronBrowserWindow> = {
     cb();
   }),
   show: jest.fn(),
+  webContents,
 } as Partial<ElectronBrowserWindow> as any;
 
-jest.mock("electron" , () => {
+jest.mock("electron", () => {
   return {
     BrowserWindow: jest.fn().mockImplementation(() => {
       return BrowserWindow;
@@ -45,7 +51,7 @@ describe("Win", () => {
     // the 1st entry (0th index) in calls is the "page-title-updated" event
     // so this fires the event, and ensures that is is prevented
     const pageTitleEvent = BrowserWindow.on.mock.calls[0][1];
-    const emitPageTitleUpdated =  pageTitleEvent as unknown as PageTitleEventHandler;
+    const emitPageTitleUpdated = pageTitleEvent as unknown as PageTitleEventHandler;
     emitPageTitleUpdated(evt);
     expect(evt.preventDefault).toHaveBeenCalledTimes(1);
   });

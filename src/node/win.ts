@@ -15,6 +15,11 @@ export class Win implements IWindowProvider {
     // internally, we need to use the raw version
     const rawWin = win.toBrowserWindow();
 
+    // block middle-clicking, which opens a new window
+    rawWin.webContents.on("new-window", (e) => {
+      e.preventDefault();
+    });
+
     rawWin.on("page-title-updated", (e) => {
       if (opts && opts.title) {
         e.preventDefault();

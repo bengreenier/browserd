@@ -99,6 +99,7 @@ export class Application implements IApplication {
       url,
       webPreferences: {
         contextIsolation: true,
+        disableBlinkFeatures: "Auxclick",
       },
       width,
     });
