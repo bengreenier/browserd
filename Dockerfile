@@ -3,11 +3,13 @@ FROM node:12.4 as builder
 WORKDIR /usr/app/builder
 COPY package*.json ts*.json ./
 COPY ./src ./src
+# use npm to complete lifecycle operations
 RUN npm install
 RUN npm run lint
 RUN npm run test
 RUN npm run dist
 
+# setup runtime
 FROM debian:stretch-slim as runner
 # Create a lower-priv user (electron) to run as
 RUN groupadd -r electron \
@@ -18,7 +20,6 @@ RUN groupadd -r electron \
   && chown -R electron:electron /home/electron/.config
 WORKDIR /home/electron/browserd
 COPY --from=builder /usr/app/builder/bin/*.deb ./
-
 # install the deb
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y \
@@ -26,11 +27,10 @@ RUN apt-get update -y \
   && apt-get install -y ./*.deb \
   && rm -rf /var/lib/apt/lists/*
 
+# build release image
 FROM runner as release
-# we start as root, so that we can start dbus
-# note: our CMD will drop us into the electron user
+# we start as root, but quickly drop to "electron"
 USER root
-
 # as root:
 # start dbus system
 # as electron:
