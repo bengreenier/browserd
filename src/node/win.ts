@@ -18,6 +18,12 @@ export class Win implements IWindowProvider {
     // internally, we need to use the raw version
     const rawWin = win.toBrowserWindow();
 
+    rawWin.on("page-title-updated", (e) => {
+      if (opts && opts.title) {
+        e.preventDefault();
+      }
+    });
+
     rawWin.webContents.on("did-start-navigation", (_, url) => {
       const newURL = new URL(url);
 
@@ -37,11 +43,6 @@ export class Win implements IWindowProvider {
       e.preventDefault();
     });
 
-    // disable downloading files
-    rawWin.webContents.session.on("will-download", (e) => {
-      e.preventDefault();
-    });
-
     // disable executing javascript files
     rawWin.webContents.on("will-navigate", (e, url) => {
       const newURL = new URL(url);
@@ -50,10 +51,9 @@ export class Win implements IWindowProvider {
       }
     });
 
-    rawWin.on("page-title-updated", (e) => {
-      if (opts && opts.title) {
-        e.preventDefault();
-      }
+    // disable downloading files
+    rawWin.webContents.session.on("will-download", (e) => {
+      e.preventDefault();
     });
 
     const windowShown = new Promise((resolve) => {
