@@ -70,6 +70,15 @@ npm install
 npm start
 ```
 
+## Electron security
+
+Our service follows [electron security guideline](https://electronjs.org/docs/tutorial/security) and enables the following behaviors:
+
++ Enabling [contextIsolation](https://electronjs.org/docs/tutorial/security#3-enable-context-isolation-for-remote-content), which allows scripts running in the renderer to make changes to its javascript environment without worrying about conflicting with the scripts in the electron API or the preload script.
++ Blocking [mouse middle-clicking](https://www.blackhat.com/docs/us-17/thursday/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf), which opens a new window and makes our remote input stop working.
++ Disabling popup dialog for file downloading (when clicking on a link) so that it doesn't interfere with the streamer window.
++ Displaying warning about using [insecure http protocol](https://electronjs.org/docs/tutorial/security#1-only-load-secure-content) or when the streamer window [navigates to a new origin](https://electronjs.org/docs/tutorial/security#12-disable-or-limit-navigation), which is different from the `SERVICE_URL`.
+
 ## Contributing
 
 Coming soon. ✨
