@@ -56,7 +56,7 @@ describe("Application", () => {
       alwaysOnTop: true,
       backgroundColor: "#000",
       height: expectedHeight,
-      logger,
+      logger: expectedLogger,
       title: expectedWindowTitle,
       url: expectedUrl,
       webPreferences: {
@@ -68,7 +68,7 @@ describe("Application", () => {
     // note: the values here are __not__ driven by config
     expect(WinProvider.createWindow).toHaveBeenNthCalledWith(2, {
       height: 10,
-      logger,
+      logger: expectedLogger,
       url: "chrome://webrtc-internals",
       webPreferences: {
         preload: path.join(__dirname, "../../browser/main.js"),
