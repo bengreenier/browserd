@@ -1,4 +1,4 @@
-# lint, test, transpile and buid binary (as deb)
+# lint, test, transpile and build binary (as deb)
 FROM node:12.4 as builder
 WORKDIR /usr/app/builder
 COPY package*.json ts*.json ./
