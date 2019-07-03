@@ -4,15 +4,10 @@ import {
   Session as ElectronSession,
   WebContents as ElectronWebContents,
 } from "electron";
+import pino from "pino";
 import { Win } from "../../node/win";
 
-const logger = {
-  warn: jest.fn(),
-};
-
-jest.mock("pino", () => jest.fn(() => {
-  return logger;
-}));
+jest.mock("pino");
 
 const Session: jest.Mocked<ElectronSession> = {
   on: jest.fn(),
@@ -47,14 +42,17 @@ describe("Win", () => {
     const expectedUrl = "https://test.com";
     const expectedTitle = "windowTitle";
     const instance = new Win();
+    const logger = pino();
 
     const win = await instance.createWindow({
+      logger,
       title: expectedTitle,
       url: expectedUrl,
     });
 
     expect(ElectronBrowserWindow).toHaveBeenCalledTimes(1);
     expect(ElectronBrowserWindow).toHaveBeenCalledWith({
+      logger,
       show: false,
       title: expectedTitle,
       url: expectedUrl,

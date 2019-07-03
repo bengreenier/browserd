@@ -95,6 +95,7 @@ export class Application implements IApplication {
       alwaysOnTop: true,
       backgroundColor: "#000",
       height,
+      logger,
       title: captureWindowTitle,
       url,
       webPreferences: {
@@ -120,6 +121,7 @@ export class Application implements IApplication {
 
     const streamerWindow = await winProvider.createWindow({
       height: 10,
+      logger,
       url: "chrome://webrtc-internals",
       webPreferences: {
         // this is what triggers our actual streamer logic (webrtc init and whatnot)

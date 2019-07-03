@@ -29,12 +29,13 @@ describe("Application", () => {
     const expectedPollUrl = "http://poll.test.com";
     const expectedInterval = 1020;
     const expectedIceServers: RTCIceServer[] = [];
+    const logger = pino();
 
     const instance = new Application({
       captureWindowTitle: expectedWindowTitle,
       expHideStreamer: expectedHideStreamer,
       height: expectedHeight,
-      logger: pino(),
+      logger,
       signalConfig: {
         pollIntervalMs: expectedInterval,
         url: expectedPollUrl,
@@ -54,6 +55,7 @@ describe("Application", () => {
       alwaysOnTop: true,
       backgroundColor: "#000",
       height: expectedHeight,
+      logger,
       title: expectedWindowTitle,
       url: expectedUrl,
       webPreferences: {
@@ -65,6 +67,7 @@ describe("Application", () => {
     // note: the values here are __not__ driven by config
     expect(WinProvider.createWindow).toHaveBeenNthCalledWith(2, {
       height: 10,
+      logger,
       url: "chrome://webrtc-internals",
       webPreferences: {
         preload: path.join(__dirname, "../../browser/main.js"),

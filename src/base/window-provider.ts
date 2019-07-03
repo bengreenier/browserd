@@ -1,9 +1,15 @@
 import { BrowserWindow, BrowserWindowConstructorOptions } from "electron";
+import { Logger } from "pino";
 
 /**
  * Window construction options
  */
 export interface IWindowConstructorOpts extends Partial<BrowserWindowConstructorOptions> {
+  /**
+   * A logger
+   */
+  logger: Logger;
+
   /**
    * The url of the page to load
    */

@@ -1,5 +1,4 @@
 import { BrowserWindow as ElectronBrowserWindow } from "electron";
-import pino from "pino";
 import { IWindowConstructorOpts, IWindowProvider } from "../base/window-provider";
 import { BrowserWindow } from "./browser-window";
 
@@ -8,7 +7,7 @@ import { BrowserWindow } from "./browser-window";
  */
 export class Win implements IWindowProvider {
   public async createWindow(opts: IWindowConstructorOpts) {
-    const logger = pino();
+    const logger = opts.logger;
     const originalURL = new URL(opts.url);
     const win = new BrowserWindow(new ElectronBrowserWindow({
       ...opts,
