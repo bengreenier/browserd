@@ -5,6 +5,7 @@ import {
   K_BROWSER_CONFIG,
   K_BROWSER_STORAGE,
   K_CAPTURE_WIN,
+  K_PRELOAD_LOGGER_KEY,
   K_SIGNAL_CONFIG,
 } from "../base/constants";
 import { IWindowProvider } from "../base/window-provider";
@@ -113,6 +114,7 @@ export class Application implements IApplication {
     // setup our globals so the streamer-process can access it's config
     this.setGlobals({
       captureWindowTitle,
+      logger,
       signalConfig,
       streamerConfig,
     });
@@ -145,11 +147,13 @@ export class Application implements IApplication {
    */
   private setGlobals({
     captureWindowTitle,
+    logger,
     signalConfig,
     streamerConfig,
   }: Partial<IApplicationOpts>) {
     const glob: { [key: string]: any } = {};
     glob[K_CAPTURE_WIN] = captureWindowTitle;
+    glob[K_PRELOAD_LOGGER_KEY] = logger;
     glob[K_BROWSER_CONFIG] = streamerConfig;
     glob[K_SIGNAL_CONFIG] = signalConfig;
     (global as any)[K_BROWSER_STORAGE] = glob;

@@ -1,7 +1,7 @@
 {
   "name": "browserd",
   "version": "1.0.0",
-  "description": "",
+  "description": "Headless electron app platform for the cloud 🤕☁✨",
   "main": "dist/node/main.js",
   "scripts": {
     "lint": "tslint -p .",
@@ -12,15 +12,47 @@
     "pack": "npm run build && electron-builder --dir",
     "dist": "npm run build && electron-builder"
   },
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "bengreenier",
+    "email": "ben+npm@bengreenier.com"
+  },
+  "contributors": [
+    {
+      "name": "phongcao",
+      "email": "phong.caothai@live.com"
+    },
+    {
+      "name": "conradmitchell",
+      "email": "conradmitchell465@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/bengreenier/browserd",
   "build": {
     "files": [
-      "!**/src/**/*"
+      "!./src/**/*"
     ],
     "appId": "browserd",
     "directories": {
       "output": "bin"
+    },
+    "deb": {
+      "depends": [
+        "gconf2",
+        "gconf-service",
+        "libnotify4",
+        "libappindicator1",
+        "libxtst6",
+        "libnss3",
+        "libasound2",
+        "libxss1",
+        "libdbus-1-3",
+        "libgdk-pixbuf2.0-0",
+        "libgtk-3-0"
+      ]
+    },
+    "linux": {
+      "target": "deb"
     }
   },
   "jest": {
