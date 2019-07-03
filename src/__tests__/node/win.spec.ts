@@ -1,9 +1,14 @@
 import { BrowserWindow as ElectronBrowserWindow, Event as ElectronEvent } from "electron";
 import { Win } from "../../node/win";
 
+const session = {
+  on: jest.fn(),
+}
+
 const webContents = {
   loadURL: jest.fn(),
   on: jest.fn(),
+  session,
 } as any;
 
 const BrowserWindow: jest.Mocked<ElectronBrowserWindow> = {

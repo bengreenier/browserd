@@ -18,11 +18,6 @@ export class Win implements IWindowProvider {
     // internally, we need to use the raw version
     const rawWin = win.toBrowserWindow();
 
-    // block middle-clicking, which opens a new window
-    rawWin.webContents.on("new-window", (e) => {
-      e.preventDefault();
-    });
-
     rawWin.webContents.on("did-start-navigation", (_, url) => {
       const newURL = new URL(url);
 
@@ -34,6 +29,24 @@ export class Win implements IWindowProvider {
       // warn about navigating to different origins
       if (newURL.hostname && newURL.hostname !== originalURL.hostname) {
         logger.warn("Navigating to a different origin: " + newURL.hostname);
+      }
+    });
+
+    // block middle-clicking, which opens a new window
+    rawWin.webContents.on("new-window", (e) => {
+      e.preventDefault();
+    });
+
+    // disable downloading files
+    rawWin.webContents.session.on("will-download", (e) => {
+      e.preventDefault();
+    });
+
+    // disable executing javascript files
+    rawWin.webContents.on("will-navigate", (e, url) => {
+      const newURL = new URL(url);
+      if (newURL.pathname.endsWith(".js")) {
+        e.preventDefault();
       }
     });
 
