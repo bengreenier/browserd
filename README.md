@@ -54,6 +54,8 @@ docker build . -t browserd:local
 docker run -it --env-file .env browserd:local
 ```
 
+> Note: Our [`Dockerfile`](./Dockerfile) has a defined display resolution of `1920x1080` - You may change this as needed.
+
 ### Locally
 
 > Note: Your `.env` file should be in the project directory (next to `package.json`) - for more details see the
