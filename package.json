@@ -4,7 +4,14 @@
   "description": "Contains the functionality of the consumer and provider of a Webrtc stream in the cloud",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bootstrap": "lerna bootstrap --hoist",
+    "build": "lerna run build",
+    "test": "lerna run test",
+    "lint": "lerna run lint",
+    "start": "lerna exec --scope @browserd/stream-provider -- npm run start",
+    "clean": "lerna clean --yes",
+    "dist": "lerna exec --scope @browserd/stream-provider -- npm run dist",
+    "magic": "npm run bootstrap && npm run build && npm run start"
   },
   "author": {
     "name": "bengreenier",

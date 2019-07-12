@@ -1,7 +1,8 @@
 {
-	"name": "signal-provider",
+	"name": "@browserd/shared",
 	"version": "1.0.0",
-	"description": "Manages interactions between peers (provider/consumer) and the singaler.",
+	"description": "shared functionality between the consumer and provider",
+	"main": "dist/index.js",
 	"author": {
 		"name": "bengreenier",
 		"email": "ben+npm@bengreenier.com"

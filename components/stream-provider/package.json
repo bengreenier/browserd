@@ -1,13 +1,12 @@
 {
-  "name": "stream-provider",
+  "name": "@browserd/stream-provider",
   "version": "1.0.0",
   "description": "App that streams from the cloud",
   "main": "dist/stream-provider/src/node/main.js",
   "scripts": {
     "lint": "tslint -p .",
     "build": "tsc -p .",
-    "direct-start": "electron .",
-    "start": "npm run build && npm run direct-start",
+    "start": "electron .",
     "test": "jest --coverage",
     "pack": "npm run build && electron-builder --dir",
     "dist": "npm run build && electron-builder"
@@ -32,7 +31,8 @@
     "files": [
       "**/src/**/*"
     ],
-    "appId": "stream-provider",
+    "appId": "com.bengreenier.browserd",
+    "productName": "browserd",
     "directories": {
       "output": "bin"
     },
@@ -52,6 +52,8 @@
       ]
     },
     "linux": {
+      "executableName": "browserd",
+      "artifactName": "${productName}-${version}.${ext}",
       "target": "deb"
     }
   },
@@ -66,10 +68,10 @@
     "testResultsProcessor": "jest-sonar-reporter"
   },
   "dependencies": {
+    "@browserd/shared": "^1.0.0",
     "dotenv": "^8.0.0",
     "pino": "^5.12.6",
     "sdp-transform": "^2.8.0",
-    "signal-provider": "../shared",
     "simple-peer": "^9.3.0",
     "strict-event-emitter-types": "^2.0.0",
     "twilio": "^3.32.0",

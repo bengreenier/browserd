@@ -55,6 +55,8 @@ How to get stream-provider up and running. ⚙
 
 You'll need [docker](https://docs.docker.com/install/) to build and run. Once you have it, you can build and run:
 
+> Note: the following must be run from the root directory of this repository (probably `browserd` on disk)
+
 ```
 # build the container (and source)
 docker build . -f components/stream-provider/Dockerfile -t browserd:local
@@ -75,6 +77,9 @@ those, you can install dependencies and run:
 # use lerna to hoist dependencies and link local dependencies
 npx lerna bootstrap --hoist
 
-# build and run
-npm start
+# build
+npx lerna run build
+
+# run
+npm run start
 ```

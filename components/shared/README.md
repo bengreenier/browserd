@@ -14,7 +14,10 @@ How to test shared functionality. ⚙
 # use lerna to hoist dependencies and link local dependencies
 npx lerna bootstrap --hoist
 
-# build and test
-npm run build && npm run test
+# build
+npx lerna run build
+
+# test
+npm run test
 ```
 

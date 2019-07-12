@@ -1,19 +1,13 @@
 # lint, test, transpile and build binary (as deb)
 FROM node:12.4 as builder
 WORKDIR /usr/app/builder
-COPY ./components/stream-provider/src ./components/stream-provider/src
-COPY ./components/shared/src ./components/shared/src
-COPY ./components/stream-provider/package*.json ./components/stream-provider/ts*.json ./components/stream-provider/
-COPY ./components/shared/package*.json ./components/shared/ts*.json ./components/shared/
-COPY ./package*.json ./
-COPY ./lerna.json ./
-RUN npm install lerna -g
-RUN echo y | lerna clean
-RUN lerna bootstrap --hoist
-WORKDIR components/stream-provider
-RUN npm run lint
-RUN npm run test
+COPY ./components ./components
+COPY ./*.json ./
+RUN npm install
+RUN npm run clean && npm run bootstrap && npm run build
+RUN npm run lint && npm run test
 RUN npm run dist
+RUN cp ./components/stream-provider/bin/*.deb ./
 
 # setup runtime
 FROM debian:stretch-slim as runner
@@ -25,7 +19,7 @@ RUN groupadd -r electron \
   && mkdir /home/electron/.config \
   && chown -R electron:electron /home/electron/.config
 WORKDIR /home/electron/browserd
-COPY --from=builder /usr/app/builder/components/stream-provider/bin/*.deb ./
+COPY --from=builder /usr/app/builder/*.deb ./
 # install the deb
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y \
@@ -44,4 +38,4 @@ USER root
 # start x11 session (xvfb)
 # start browserd
 CMD service dbus start \
-  && su electron -c 'dbus-run-session -- xvfb-run -s "-ac -br -nocursor -screen 0 1920x1080x24 -nolisten tcp" stream-provider --no-sandbox --disable-gpu'
+  && su electron -c 'dbus-run-session -- xvfb-run -s "-ac -br -nocursor -screen 0 1920x1080x24 -nolisten tcp" browserd --no-sandbox --disable-gpu'

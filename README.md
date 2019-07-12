@@ -73,11 +73,17 @@ Our service follows [electron security guideline](https://electronjs.org/docs/tu
 
 ## Running
 
-How to get browserd up and running. Please refer the README of the component you would like to run for instructions here. ⚙
+> Note: Please refer the README of the component subdirectory for more detailed instructions.
 
-* [Stream-consumer](components/stream-consumer)
+Ensure you've installed dependencies (`npm i`) before continuing.
 
-* [Stream-provider](components/stream-provider)
+Follow these steps to get browserd up and running:
+
+> Note: `npm run magic` will complete all these steps for you.
+
++ `npm run bootstrap` - this runs [lerna bootstrap](https://github.com/lerna/lerna/tree/master/commands/bootstrap#readme) to setup the project, installing dependencies as it goes.
++ `npm run build` - this builds all the packages needed to run.
++ `npm run start` - this starts the [`stream-provider`](./components/stream-provider). Note that it requires some [environment variable configuration](#configuration), as mentioned above.
 
 ## Electron security
 
