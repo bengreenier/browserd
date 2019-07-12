@@ -1,5 +1,5 @@
 import * as url from "url";
-import { BaseSignalProvider, ISignalPeer } from "../base/signal-provider";
+import { BaseSignalProvider, ISignalPeer } from "./signal-provider";
 
 /**
  * Signal constructor options

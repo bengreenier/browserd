@@ -1,14 +1,15 @@
 import * as path from "path";
 import { Logger } from "pino";
+import { ISignalOpts } from "../../../shared/src/signal";
 import { IApplication } from "../base/application";
 import {
   K_BROWSER_CONFIG,
   K_BROWSER_STORAGE,
   K_CAPTURE_WIN,
+  K_PRELOAD_LOGGER_KEY,
   K_SIGNAL_CONFIG,
 } from "../base/constants";
 import { IWindowProvider } from "../base/window-provider";
-import { ISignalOpts } from "../browser/signal";
 
 /**
  * Application constructor options
@@ -95,8 +96,13 @@ export class Application implements IApplication {
       alwaysOnTop: true,
       backgroundColor: "#000",
       height,
+      logger,
       title: captureWindowTitle,
       url,
+      webPreferences: {
+        contextIsolation: true,
+        disableBlinkFeatures: "Auxclick",
+      },
       width,
     });
 
@@ -108,6 +114,7 @@ export class Application implements IApplication {
     // setup our globals so the streamer-process can access it's config
     this.setGlobals({
       captureWindowTitle,
+      logger,
       signalConfig,
       streamerConfig,
     });
@@ -116,6 +123,7 @@ export class Application implements IApplication {
 
     const streamerWindow = await winProvider.createWindow({
       height: 10,
+      logger,
       url: "chrome://webrtc-internals",
       webPreferences: {
         // this is what triggers our actual streamer logic (webrtc init and whatnot)
@@ -139,11 +147,13 @@ export class Application implements IApplication {
    */
   private setGlobals({
     captureWindowTitle,
+    logger,
     signalConfig,
     streamerConfig,
   }: Partial<IApplicationOpts>) {
     const glob: { [key: string]: any } = {};
     glob[K_CAPTURE_WIN] = captureWindowTitle;
+    glob[K_PRELOAD_LOGGER_KEY] = logger;
     glob[K_BROWSER_CONFIG] = streamerConfig;
     glob[K_SIGNAL_CONFIG] = signalConfig;
     (global as any)[K_BROWSER_STORAGE] = glob;
