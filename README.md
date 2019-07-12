@@ -76,8 +76,6 @@ How to get browserd up and running. Please refer the README of the component you
 
 * [Stream-provider](components/stream-provider)
 
-
-
 ## Electron security
 
 Our service follows [electron security guideline](https://electronjs.org/docs/tutorial/security) and enables the following behaviors:
