@@ -73,7 +73,7 @@ Our service follows [electron security guideline](https://electronjs.org/docs/tu
 
 ## Running
 
-> Note: Please refer the README of the component subdirectory for more detailed instructions.
+> Note: Please refer the README of any component subdirectory for more detailed instructions.
 
 Ensure you've installed dependencies (`npm i`) before continuing.
 

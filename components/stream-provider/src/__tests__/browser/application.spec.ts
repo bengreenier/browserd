@@ -1,5 +1,5 @@
+import { BaseSignalProvider } from "@browserd/shared";
 import pino from "pino";
-import { BaseSignalProvider } from "../../../../shared/src/signal-provider";
 import { IInputHandler } from "../../base/input-handler";
 import { IDeviceInfo, IStream, IStreamProvider } from "../../base/stream-provider";
 import { BaseWebrtcProvider } from "../../base/webrtc-provider";
