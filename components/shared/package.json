@@ -1,0 +1,42 @@
+{
+	"name": "@browserd/shared",
+	"version": "1.0.0",
+	"description": "shared functionality between the consumer and provider",
+	"main": "dist/index.js",
+	"author": {
+		"name": "bengreenier",
+		"email": "ben+npm@bengreenier.com"
+	},
+	"license": "MIT",
+	"scripts": {
+		"lint": "tslint -p .",
+		"build": "tsc -p .",
+		"test": "jest --coverage"
+	},
+	"jest": {
+		"collectCoverageFrom": [
+			"./src/**/*.ts"
+		],
+		"preset": "ts-jest",
+		"testRegex": [
+			"/__tests__/.*spec\\.[jt]sx?$"
+		],
+		"testResultsProcessor": "jest-sonar-reporter"
+	},
+	"dependencies": {
+		"strict-event-emitter-types": "^2.0.0"
+	},
+	"devDependencies": {
+		"@types/dotenv": "^6.1.1",
+		"@types/jest": "^24.0.13",
+		"@types/pino": "^5.8.8",
+		"@types/sdp-transform": "^2.4.0",
+		"@types/uuid": "^3.4.4",
+		"jest": "^24.8.0",
+		"jest-fetch-mock": "^2.1.2",
+		"jest-sonar-reporter": "^2.0.0",
+		"ts-jest": "^24.0.2",
+		"tslint": "^5.17.0",
+		"typescript": "^3.5.1"
+	}
+}

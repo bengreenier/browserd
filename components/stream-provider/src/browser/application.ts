@@ -1,8 +1,8 @@
+import { BaseSignalProvider } from "@browserd/shared";
 import { Logger } from "pino";
 import { v4 as uuid } from "uuid";
 import { IApplication } from "../base/application";
 import { IInputHandler, IInputMessage } from "../base/input-handler";
-import { BaseSignalProvider } from "../base/signal-provider";
 import { IStreamProvider } from "../base/stream-provider";
 import { BaseWebrtcProvider } from "../base/webrtc-provider";
 

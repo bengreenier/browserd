@@ -1,5 +1,5 @@
 import { default as fetchFill, GlobalWithFetchMock } from "jest-fetch-mock";
-import { ISignalOpts, Signal } from "../../browser/signal";
+import { ISignalOpts, Signal } from "../signal";
 
 // mock global.fetch and provide global.fetchMock to control it
 {

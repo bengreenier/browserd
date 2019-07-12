@@ -1,0 +1,14 @@
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    exclude:
+    - stream-provider
+    - stream-consumer
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: docker build . -f components/shared/Dockerfile 

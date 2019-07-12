@@ -1,13 +1,13 @@
 # lint, test, transpile and build binary (as deb)
 FROM node:12.4 as builder
 WORKDIR /usr/app/builder
-COPY package*.json ts*.json ./
-COPY ./src ./src
-# use npm to complete lifecycle operations
+COPY ./components ./components
+COPY ./*.json ./
 RUN npm install
-RUN npm run lint
-RUN npm run test
+RUN npm run clean && npm run bootstrap && npm run build
+RUN npm run lint && npm run test
 RUN npm run dist
+RUN cp ./components/stream-provider/bin/*.deb ./
 
 # setup runtime
 FROM debian:stretch-slim as runner
@@ -19,7 +19,7 @@ RUN groupadd -r electron \
   && mkdir /home/electron/.config \
   && chown -R electron:electron /home/electron/.config
 WORKDIR /home/electron/browserd
-COPY --from=builder /usr/app/builder/bin/*.deb ./
+COPY --from=builder /usr/app/builder/*.deb ./
 # install the deb
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y \

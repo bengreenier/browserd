@@ -1,5 +1,6 @@
 import * as path from "path";
 import { Logger } from "pino";
+import { ISignalOpts } from "../../../shared/src/signal";
 import { IApplication } from "../base/application";
 import {
   K_BROWSER_CONFIG,
@@ -9,7 +10,6 @@ import {
   K_SIGNAL_CONFIG,
 } from "../base/constants";
 import { IWindowProvider } from "../base/window-provider";
-import { ISignalOpts } from "../browser/signal";
 
 /**
  * Application constructor options
