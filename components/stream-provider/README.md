@@ -1,7 +1,8 @@
 # browserd/stream-provider
 
-Represents the component that sends content from the cloud 🤕☁✨
+The component that streams content from the cloud 🤕☁✨
 
+![Project status](https://img.shields.io/badge/Project%20Status-Beta-green.svg)
 [![Build Status](https://dev.azure.com/bengreenier/browserd/_apis/build/status/stream-provider?branchName=master)](https://dev.azure.com/bengreenier/browserd/_build/latest?definitionId=11&branchName=master)
 
 [![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://deploy.azure.com/?repository=https://github.com/bengreenier/browserd/blob/repo-restructure/components/stream-provider#/form/setup)
@@ -67,20 +68,13 @@ docker run -it --env-file ./components/stream-provider/.env browserd:local
 > Note: Your `.env` file should be in the project directory (next to `package.json`) - for more details see the
 [Configuration](#configuration) section above.
 
-You'll need [`Node LTS (v10.x.x)`](https://nodejs.org/en/) and `npm` (bundled with the node installer`) to build and run. Once you have
+You'll need [`Node LTS (v10.x.x)`](https://nodejs.org/en/) and `npm` (bundled with the node installer) to build and run. Once you have
 those, you can install dependencies and run:
 
 ```
 # use lerna to hoist dependencies and link local dependencies
-lerna run bootstrap --hoist
-
-# cd to the stream-provider
-cd components/stream-provider
+npx lerna bootstrap --hoist
 
 # build and run
 npm start
 ```
-
-## Contributing
-
-Coming soon. ✨
