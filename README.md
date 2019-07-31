@@ -19,7 +19,6 @@ This app is broken down into two main components the [stream-provider](component
 
 [![Build Status](https://dev.azure.com/bengreenier/browserd/_apis/build/status/shared?branchName=master)](https://dev.azure.com/bengreenier/browserd/_build/latest?definitionId=12&branchName=master)
 
-
 ### Stream-Provider
 
 [This electron app](./components/stream-provider) connects to the stream-consumer through a signaling server. It recieves input from the consumer, and streams its view to the consumer. 
@@ -84,7 +83,6 @@ Follow these steps to get browserd up and running:
 + `npm run bootstrap` - this runs [lerna bootstrap](https://github.com/lerna/lerna/tree/master/commands/bootstrap#readme) to setup the project, installing dependencies as it goes.
 + `npm run build` - this builds all the packages needed to run.
 + `npm run start` - this starts the [`stream-provider`](./components/stream-provider). Note that it requires some [environment variable configuration](#configuration), as mentioned above.
-
 
 ## Contributing
 
