@@ -19,7 +19,6 @@ This app is broken down into two main components the [stream-provider](component
 
 [![Build Status](https://dev.azure.com/bengreenier/browserd/_apis/build/status/shared?branchName=master)](https://dev.azure.com/bengreenier/browserd/_build/latest?definitionId=12&branchName=master)
 
-
 ### Stream-Provider
 
 [This electron app](./components/stream-provider) connects to the stream-consumer through a signaling server. It recieves input from the consumer, and streams its view to the consumer. 
@@ -84,15 +83,6 @@ Follow these steps to get browserd up and running:
 + `npm run bootstrap` - this runs [lerna bootstrap](https://github.com/lerna/lerna/tree/master/commands/bootstrap#readme) to setup the project, installing dependencies as it goes.
 + `npm run build` - this builds all the packages needed to run.
 + `npm run start` - this starts the [`stream-provider`](./components/stream-provider). Note that it requires some [environment variable configuration](#configuration), as mentioned above.
-
-## Electron security
-
-Our service follows [electron security guideline](https://electronjs.org/docs/tutorial/security) and enables the following behaviors:
-
-+ Enabling [contextIsolation](https://electronjs.org/docs/tutorial/security#3-enable-context-isolation-for-remote-content), which allows scripts running in the renderer to make changes to its javascript environment without worrying about conflicting with the scripts in the electron API or the preload script.
-+ Blocking [mouse middle-clicking](https://www.blackhat.com/docs/us-17/thursday/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf), which opens a new window and makes our remote input stop working.
-+ Disabling popup dialog for file downloading (when clicking on a link) so that it doesn't interfere with the streamer window.
-+ Displaying warning about using [insecure http protocol](https://electronjs.org/docs/tutorial/security#1-only-load-secure-content) or when the streamer window [navigates to a new origin](https://electronjs.org/docs/tutorial/security#12-disable-or-limit-navigation), which is different from the `SERVICE_URL`.
 
 ## Contributing
 
