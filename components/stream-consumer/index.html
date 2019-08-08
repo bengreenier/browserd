@@ -10,20 +10,30 @@
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        font-family: "Open Sans", sans-serif
+    }
 </style>
 
 <body class="w3-theme-l5">
-<div class="w3-top">
-    <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
-      <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-      <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>browserd/stream-consumer</a>
-     </div>
+    <div class="w3-top">
+        <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
+            <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2"
+                href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+            <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i
+                    class="fa fa-home w3-margin-right"></i>browserd/stream-consumer</a>
+        </div>
     </div>
 
     <!-- Navbar on small screens -->
     <div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
-      <a href="#" class="w3-bar-item w3-button w3-padding-large">browserd/stream-consumer</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding-large">browserd/stream-consumer</a>
     </div>
 
     <div id="container" class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
@@ -43,27 +53,19 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
                             <br>
                             <br>
                             Poll interval:
-                            <br><input type="number" id="poll-interval" value="1000" />
+                            <br><input type="number" id="poll-interval" value="100" />
                             <br>
                             <br>
-							Stun/Turn server:
+                            Stun/Turn server:
                             <br><input type="text" id="turn-server" value="stun:stun.l.google.com:19302" />
                             <br>
                             <br>
-							Turn username (optional):
+                            Turn username (optional):
                             <br><input type="text" id="turn-username" value="" />
                             <br>
                             <br>
-							Turn password (optional):
+                            Turn password (optional):
                             <br><input type="text" id="turn-password" value="" />
-                            <br>
-                            <br>							
-                        </div>
-                        <div id='renderers' style="display:none">
-                            <h4 class="w3-center">Available Stream Providers:</h4>
-                            <select id="peerList" style="max-width:150px">
-                            </select>
-                            <button id="join">Join</button>
                             <br>
                             <br>
                         </div>
@@ -90,7 +92,6 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
         </div>
     </div>
 
-    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
     <script src="dist/stream-consumer/src/main.js"></script>
 </body>
 

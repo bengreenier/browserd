@@ -1,15 +1,16 @@
+import $ from "jquery";
 import pino from "pino";
 import SimplePeer from "simple-peer";
 import { v4 as uuid } from "uuid";
 import { Signal } from "../../shared/src/signal";
-import { ISignalPeer } from "../../shared/src/signal-provider";
+import { BaseSignalProvider, ISignalPeer } from "../../shared/src/signal-provider";
 
 const logger = pino();
 
 /**
  * Connect to signaling server and get stream provider id
  */
-export const signIn = async (signalProvider: Signal) => {
+export const signIn = async (signalProvider: BaseSignalProvider) => {
   // Generate a random uuid for peer name
   const peerName = uuid();
 
@@ -21,17 +22,17 @@ export const signIn = async (signalProvider: Signal) => {
     if (peer.id !== streamConsumerId) {
       streamProviderId = peer.id;
     }
-  })
+  });
 
   if (!streamProviderId) {
     throw new Error("Couldn't find any stream provider");
   }
 
   return streamProviderId;
-}
+};
 
 /**
- * Connect to stream provider
+ * Connect to stream provider and render video
  */
 export const connect = async () => {
   // Init signal provider
