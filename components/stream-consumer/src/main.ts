@@ -4,6 +4,7 @@ import SimplePeer from "simple-peer";
 import { v4 as uuid } from "uuid";
 import { Signal } from "../../shared/src/signal";
 import { BaseSignalProvider, ISignalPeer } from "../../shared/src/signal-provider";
+import { HtmlInputEvents, InputMonitor } from "./input";
 
 const logger = pino();
 
@@ -95,9 +96,19 @@ export const connect = async () => {
   });
 
   peer.on("stream", (rstream: MediaStream) => {
+    // Play video
     const videoElement = $("#remote-video") as any as HTMLVideoElement[];
     videoElement[0].srcObject = rstream;
     videoElement[0].play();
+
+    // Input handling
+    const inputMonitor = new InputMonitor(videoElement[0]);
+    const sendInputToPeer = (data: any) => {
+      peer.send(JSON.stringify(data));
+    };
+
+    inputMonitor.on(HtmlInputEvents.Mouseup, sendInputToPeer);
+    inputMonitor.on(HtmlInputEvents.Mousedown, sendInputToPeer);
   });
 };
 
