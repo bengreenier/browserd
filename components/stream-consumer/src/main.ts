@@ -96,20 +96,24 @@ export const connect = async () => {
   });
 
   peer.on("stream", (rstream: MediaStream) => {
-    // Play video
-    const videoElement = $("#remote-video") as any as HTMLVideoElement[];
-    videoElement[0].srcObject = rstream;
-    videoElement[0].play();
-
-    // Input handling
-    const inputMonitor = new InputMonitor(videoElement[0]);
-    const sendInputToPeer = (data: any) => {
-      peer.send(JSON.stringify(data));
-    };
-
-    inputMonitor.on(HtmlInputEvents.Mouseup, sendInputToPeer);
-    inputMonitor.on(HtmlInputEvents.Mousedown, sendInputToPeer);
+    startStreaming(rstream, peer);
   });
+};
+
+export const startStreaming = (rstream: MediaStream, peer: SimplePeer.Instance) => {
+  // Play video
+  const videoElement = $("#remote-video") as any as HTMLVideoElement[];
+  videoElement[0].srcObject = rstream;
+  videoElement[0].play();
+
+  // Input handling
+  const inputMonitor = new InputMonitor(videoElement[0]);
+  const sendInputToPeer = (data: any) => {
+    peer.send(JSON.stringify(data));
+  };
+
+  inputMonitor.on(HtmlInputEvents.Mouseup, sendInputToPeer);
+  inputMonitor.on(HtmlInputEvents.Mousedown, sendInputToPeer);
 };
 
 $(document).ready(() => {

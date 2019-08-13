@@ -3,7 +3,7 @@ import $ from "jquery";
 import { readFileSync } from "fs";
 import * as path from "path";
 import { Instance as SimplePeerInstance } from "simple-peer";
-import { connect, signIn } from "../main";
+import { connect, signIn, startStreaming } from "../main";
 import { BaseSignalProvider, ISignalPeer } from "../../../shared/src/signal-provider";
 
 // mock global.fetch and provide global.fetchMock to control it
@@ -77,21 +77,21 @@ describe("signIn", () => {
 });
 
 describe("connect", () => {
-  it("should connect and stream", async () => {
-    // Prepare html page for testing
-    const pollInterval = 1000;
-    const signalingServer = "fakesignalingserver";
-    const turnPassword = "password";
-    const turnServer = "faketurnserver";
-    const turnUsername = "username";
-    const html = readFileSync(path.resolve(__dirname, "../../index.html")).toString();
-    document.documentElement.innerHTML = html;
-    $("#poll-interval").val(pollInterval);
-    $("#signaling-server").val(signalingServer);
-    $("#turn-password").val(turnPassword);
-    $("#turn-server").val(turnServer);
-    $("#turn-username").val(turnUsername);
+  // Prepare html page for testing
+  const pollInterval = 1000;
+  const signalingServer = "fakesignalingserver";
+  const turnPassword = "password";
+  const turnServer = "faketurnserver";
+  const turnUsername = "username";
+  const html = readFileSync(path.resolve(__dirname, "../../index.html")).toString();
+  document.documentElement.innerHTML = html;
+  $("#poll-interval").val(pollInterval);
+  $("#signaling-server").val(signalingServer);
+  $("#turn-password").val(turnPassword);
+  $("#turn-server").val(turnServer);
+  $("#turn-username").val(turnUsername);
 
+  it("should connect to stream provider", async () => {
     // Init mock values for signaling
     const providerId = "1";
     const consumerId = "2";
@@ -104,6 +104,7 @@ describe("connect", () => {
 
     await connect();
 
+    // Verify simple peer initialization and event handling
     expect(LastAllocatedSimplePeerCtor).toHaveBeenCalledTimes(1);
     const ctorOpts = LastAllocatedSimplePeerCtor.mock.calls[0][0];
     expect(ctorOpts.config).toEqual({
@@ -123,5 +124,28 @@ describe("connect", () => {
     expect(SimplePeer.on.mock.calls[2][0]).toBe("close");
     expect(SimplePeer.on.mock.calls[3][0]).toBe("signal");
     expect(SimplePeer.on.mock.calls[4][0]).toBe("stream");
+  });
+
+  it("should stream video", () => {
+    const rstream: jest.Mocked<MediaStream> = {
+      id: "fakestream",
+      active: true,
+    } as Partial<MediaStream> as any;
+
+    const videoElement = $("#remote-video") as any as HTMLVideoElement[];
+    let playing = false;
+    Object.defineProperty(videoElement[0], "play", {
+      value: function () {
+        playing = true;
+      },
+    });
+
+    expect(videoElement[0].srcObject).toBeFalsy();
+    expect(playing).toBeFalsy();
+
+    startStreaming(rstream, SimplePeer);
+
+    expect(videoElement[0].srcObject).toEqual(rstream);
+    expect(playing).toBeTruthy();
   });
 });
