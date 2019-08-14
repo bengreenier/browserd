@@ -17,7 +17,7 @@ This app is broken down into two main components the [stream-provider](component
 
 [This simple web app](./components/stream-consumer) connects to the stream-provider through a signaling server. It receives and displays a stream from the cloud, and it can send input to the cloud.
 
-[![Build Status](https://dev.azure.com/bengreenier/browserd/_apis/build/status/shared?branchName=master)](https://dev.azure.com/bengreenier/browserd/_build/latest?definitionId=12&branchName=master)
+[![Build Status](https://dev.azure.com/bengreenier/browserd/_apis/build/status/stream-consumer?branchName=master)](https://dev.azure.com/bengreenier/browserd/_build/latest?definitionId=14&branchName=master)
 
 ### Stream-Provider
 
