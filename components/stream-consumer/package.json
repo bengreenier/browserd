@@ -25,17 +25,14 @@
   "dependencies": {
     "@browserd/shared": "^1.0.0",
     "pino": "^5.12.6",
-    "sdp-transform": "^2.8.0",
     "simple-peer": "^9.3.0",
     "strict-event-emitter-types": "^2.0.0",
-    "twilio": "^3.32.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",
     "@types/jquery": "^3.3.31",
     "@types/pino": "^5.8.8",
-    "@types/sdp-transform": "^2.4.0",
     "@types/simple-peer": "^6.1.5",
     "@types/uuid": "^3.4.4",
     "browserify": "^16.3.0",
