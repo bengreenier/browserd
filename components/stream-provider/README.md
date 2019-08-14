@@ -7,7 +7,7 @@ The component that streams content from the cloud 🤕☁✨
 
 [![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://deploy.azure.com/?repository=https://github.com/bengreenier/browserd/blob/repo-restructure/components/stream-provider#/form/setup)
 
-This component represents the electron app running in the cloud that streams to our [stream-consumer](../stream-consumer). It will be able to send a UI to and recieve input from the stream-consumer web app running on a browser.
+This component represents the electron app running in the cloud that streams to our [stream-consumer](../stream-consumer). It will be able to send a UI to and receive input from the stream-consumer web app running on a browser.
 
 ## Signaling server
 
