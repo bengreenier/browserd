@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>browserd/stream-consumer</title>
+</head>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        font-family: "Open Sans", sans-serif
+    }
+</style>
+
+<body class="w3-theme-l5">
+    <div class="w3-top">
+        <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
+            <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2"
+                href="javascript:void(0);" onclick="openNav()"><em class="fa fa-bars"></em></a>
+            <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><em
+                    class="fa fa-home w3-margin-right"></em>browserd/stream-consumer</a>
+        </div>
+    </div>
+
+    <!-- Navbar on small screens -->
+    <div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
+        <a href="#" class="w3-bar-item w3-button w3-padding-large">browserd/stream-consumer</a>
+    </div>
+
+    <div id="container" class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+
+        <div class="w3-row">
+            <div class="w3-col m3">
+                <div class="w3-card-2 w3-round w3-white">
+                    <div class="w3-container">
+                        <h4 class="w3-center">Config</h4>
+                        <br>
+                        <button id="connect">Connect</button>
+                        <button style="display:none" id="disconnect">Disconnect</button>
+                        <hr>
+                        <div id='cred'>
+                            Signaling server:
+                            <br><input type="text" id="signaling-server" value="https://signalingserveruri:443" />
+                            <br>
+                            <br>
+                            Poll interval:
+                            <br><input type="number" id="poll-interval" value="100" />
+                            <br>
+                            <br>
+                            Stun/Turn server:
+                            <br><input type="text" id="turn-server" value="stun:stun.l.google.com:19302" />
+                            <br>
+                            <br>
+                            Turn username (optional):
+                            <br><input type="text" id="turn-username" value="" />
+                            <br>
+                            <br>
+                            Turn password (optional):
+                            <br><input type="text" id="turn-password" value="" />
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+            </div>
+
+            <div class="w3-col m9">
+                <div class="w3-row-padding">
+                    <div class="w3-col">
+                        <div class="w3-card-2 w3-round w3-white">
+                            <div class="w3-container w3-padding">
+                                <h4 class="w3-center">Streaming content</h4>
+                                <video id="remote-video" width="1920" height="1080"></video>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dist/stream-consumer/src/bundle.js"></script>
+</body>
+
+</html>

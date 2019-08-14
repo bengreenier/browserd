@@ -1,0 +1,47 @@
+{
+  "name": "@browserd/stream-consumer",
+  "version": "1.0.0",
+  "description": "The component that consumes and interacts with content from the cloud",
+  "scripts": {
+    "lint": "tslint -p .",
+    "build": "tsc -p . && browserify dist/stream-consumer/src/main.js -o dist/stream-consumer/src/bundle.js",
+    "test": "jest --coverage"
+  },
+  "build": {
+    "files": [
+      "**/src/**/*"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/src/**/*.ts"
+    ],
+    "preset": "ts-jest",
+    "testRegex": [
+      "/__tests__/.*spec\\.[jt]sx?$"
+    ],
+    "testResultsProcessor": "jest-sonar-reporter"
+  },
+  "dependencies": {
+    "@browserd/shared": "^1.0.0",
+    "pino": "^5.12.6",
+    "simple-peer": "^9.3.0",
+    "strict-event-emitter-types": "^2.0.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.13",
+    "@types/jquery": "^3.3.31",
+    "@types/pino": "^5.8.8",
+    "@types/simple-peer": "^6.1.5",
+    "@types/uuid": "^3.4.4",
+    "browserify": "^16.3.0",
+    "jest": "^24.8.0",
+    "jest-fetch-mock": "^2.1.2",
+    "jest-sonar-reporter": "^2.0.0",
+    "jquery": "^3.4.1",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.17.0",
+    "typescript": "^3.5.1"
+  }
+}

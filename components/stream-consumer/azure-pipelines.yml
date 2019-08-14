@@ -1,0 +1,20 @@
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    exclude:
+    - stream-provider
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: |
+    npm install -g lerna
+    npx lerna bootstrap --hoist
+    npx lerna run build
+    npm run test
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
