@@ -2,6 +2,9 @@
 
 The component that consumes and interacts with content from the cloud 🤕☁✨
 
+![Project status](https://img.shields.io/badge/Project%20Status-Beta-green.svg)
+[![Build Status](https://dev.azure.com/bengreenier/browserd/_apis/build/status/stream-consumer?branchName=master)](https://dev.azure.com/bengreenier/browserd/_build/latest?definitionId=14&branchName=master)
+
 This component is a simple static webpage that can connect to a [stream-provider](../stream-provider) and is able to send input and receive content from an electron based app running in a container on the cloud.
 
 ## Signaling server
