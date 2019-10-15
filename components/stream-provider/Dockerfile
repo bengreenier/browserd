@@ -38,4 +38,4 @@ USER root
 # start x11 session (xvfb)
 # start browserd
 CMD service dbus start \
-  && su electron -c 'dbus-run-session -- xvfb-run -s "-ac -br -nocursor -screen 0 1920x1080x24 -nolisten tcp" browserd --no-sandbox --disable-gpu'
+  && su electron -c 'dbus-run-session -- xvfb-run -s "-ac -br -nocursor -screen 0 1920x1080x24 -nolisten tcp" browserd --no-sandbox --disable-gpu --disable-dev-shm-usage'
